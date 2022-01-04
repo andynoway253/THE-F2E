@@ -1,0 +1,48 @@
+@import "../../../../../node_modules/swiper/swiper-bundle.min.css";
+@import "../../../../../node_modules/swiper/swiper.min.css";
+
+img {
+  width: 1040px;
+  height: 100%;
+}
+
+:host ::ng-deep .s-wrapper {
+  border-radius: 24px;
+  .swiper-wrapper {
+    .swiper-slide {
+      overflow: unset !important;
+    }
+  }
+
+  .swiper-button-next,
+  .swiper-button-prev {
+    width: 40px;
+    height: 40px;
+    color: #ffffff;
+    border: 2px solid;
+    border-radius: 50%;
+  }
+
+  .swiper-button-next::after,
+  .swiper-button-prev::after {
+    font-size: x-large;
+  }
+
+  .swiper-pagination.swiper-pagination-bullets {
+    width: unset;
+    left: unset;
+    right: 50px;
+
+    .swiper-pagination-bullet {
+      width: 1rem;
+      height: 1rem;
+      background-color: #c4c4c4;
+    }
+
+    .swiper-pagination-bullet-active {
+      width: 1rem;
+      height: 1rem;
+      background-color: #ffffff;
+    }
+  }
+}
