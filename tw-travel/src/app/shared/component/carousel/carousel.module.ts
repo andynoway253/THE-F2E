@@ -4,8 +4,6 @@ import { SwiperConfigInterface, SWIPER_CONFIG } from 'ngx-swiper-wrapper';
 import { CarouselComponent } from './carousel.component';
 import { SwiperModule } from 'ngx-swiper-wrapper';
 
-const COMPONENT = [CarouselComponent];
-
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   direction: 'horizontal',
   slidesPerView: 'auto',
@@ -13,8 +11,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
 };
 
 @NgModule({
-  declarations: [COMPONENT],
-  exports: [COMPONENT],
+  declarations: [CarouselComponent],
+  exports: [CarouselComponent],
   imports: [BrowserModule, SwiperModule],
   providers: [
     {
@@ -22,6 +20,5 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
       useValue: DEFAULT_SWIPER_CONFIG,
     },
   ],
-  bootstrap: [],
 })
 export class CarouselModule {}
