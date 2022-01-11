@@ -1,0 +1,17 @@
+<div fxFlex fxLayout="row" fxLayoutGap="8px">
+  <ng-container *ngFor="let breadcrumb of breadcrumbs; let lastRecord = last">
+    <a
+      mat-button
+      color="primary"
+      [disableRipple]="true"
+      [routerLink]="[breadcrumb.url]"
+      *ngIf="!lastRecord"
+    >
+      {{ breadcrumb.label }}
+    </a>
+
+    <ng-container *ngIf="lastRecord">
+      <a mat-button [disableRipple]="true"> {{ breadcrumb.label }} </a>
+    </ng-container>
+  </ng-container>
+</div>
