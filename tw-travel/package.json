@@ -23,6 +23,7 @@
     "@angular/router": "~13.0.0",
     "@ng-select/ng-select": "^8.1.1",
     "@types/swiper": "^5.4.3",
+    "mat-breadcrumb": "^1.0.1",
     "ngx-swiper-wrapper": "^10.0.0",
     "rxjs": "~7.4.0",
     "swiper": "^6.4.15",

@@ -8,11 +8,14 @@ import { AttractionsComponent } from './attractions/attractions.component';
 import { RestaurantComponent } from './restaurant/restaurant.component';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { CarouselModule } from './shared/carousel/carousel.module';
+import { ActivityDetailComponent } from './activity/activity-detail/activity-detail.component';
+import { ViewRouterModule } from './view-routing.module';
+import { BreadcrumbModule, CarouselModule } from '../shared/component';
 
 const COMPONENT = [
   IndexComponent,
   ActivityComponent,
+  ActivityDetailComponent,
   AttractionsComponent,
   RestaurantComponent,
 ];
@@ -23,8 +26,12 @@ const COMPONENT = [
     CommonModule,
     FormsModule,
     FlexLayoutModule,
+
+    ViewRouterModule,
+
     MaterialModule,
     CarouselModule,
+    BreadcrumbModule,
   ],
 })
 export class ViewModule {}

@@ -8,24 +8,28 @@ import { RestaurantComponent } from './view/restaurant/restaurant.component';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/Index',
-    pathMatch: 'full', // 當路徑是空的時候轉址到 Index
-  },
-  {
-    path: 'Index',
-    component: IndexComponent,
-  },
-  {
-    path: 'Activity',
-    component: ActivityComponent,
-  },
-  {
-    path: 'Attractions',
-    component: AttractionsComponent,
-  },
-  {
-    path: 'Restaurant',
-    component: RestaurantComponent,
+    data: { breadcrumb: 'Index' },
+    children: [
+      {
+        path: '',
+        component: IndexComponent,
+      },
+      {
+        path: 'Activity',
+        component: ActivityComponent,
+        data: { breadcrumb: 'Activity' },
+      },
+      {
+        path: 'Attractions',
+        component: AttractionsComponent,
+        data: { breadcrumb: 'Attractions' },
+      },
+      {
+        path: 'Restaurant',
+        component: RestaurantComponent,
+        data: { breadcrumb: 'Restaurant' },
+      },
+    ],
   },
   {
     path: '**',

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { forkJoin } from 'rxjs';
+import { forkJoin, Subject, Subscription, takeWhile } from 'rxjs';
 import { IndexService } from './index.service';
 
 @Component({
@@ -31,6 +31,8 @@ export class IndexComponent implements OnInit {
   restaurant: any = [];
   hotel: any = [];
   activity: any = [];
+
+  aSubscription: any;
 
   ngOnInit(): void {
     forkJoin([
