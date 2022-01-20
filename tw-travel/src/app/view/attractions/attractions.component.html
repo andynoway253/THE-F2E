@@ -1,1 +1,49 @@
-<app-breadcrumb></app-breadcrumb>
+<div
+  class="content"
+  fxLayout="column"
+  fxLayoutGap="32px"
+  fxLayoutAlign="start center"
+>
+  <div class="breadcrumb">
+    <app-breadcrumb></app-breadcrumb>
+  </div>
+
+  <div class="search" fxFlex fxLayout="row" fxLayoutGap="8px">
+    <mat-form-field fxFlex="0 0 auto" appearance="outline">
+      <mat-select [(ngModel)]="defaultSelectItem">
+        <mat-option *ngFor="let item of cityList" [value]="item">
+          {{ item }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="3 0 auto" appearance="outline">
+      <input matInput placeholder="你想去哪裡？請輸入關鍵字" value="" />
+    </mat-form-field>
+
+    <div fxFlex="1 0 auto">
+      <button fxFlex mat-raised-button color="primary">
+        <mat-icon>search</mat-icon>
+        搜　　尋
+      </button>
+    </div>
+  </div>
+
+  <div class="theme" fxFlex fxLayoutAlign="start center">主題</div>
+
+  <div
+    class="themeList"
+    fxFlex
+    fxLayout="row wrap"
+    fxLayoutAlign="space-between"
+  >
+    <ng-container *ngFor="let item of themeList">
+      <div class="card">
+        <div class="title">
+          {{ item.label }}
+        </div>
+        <img src="https://fakeimg.pl/255x124/" />
+      </div>
+    </ng-container>
+  </div>
+</div>
