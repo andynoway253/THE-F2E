@@ -21,7 +21,7 @@ export const CITYLIST = [
   '嘉義市',
 ];
 
-export const THEMELIST = [
+export const ATTRACTIONSLIST = [
   { label: '觀光工廠類', src: '' },
   { label: '文化類', src: '' },
   { label: '遊憩類', src: '' },
