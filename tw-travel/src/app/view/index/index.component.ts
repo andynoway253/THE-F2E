@@ -13,17 +13,7 @@ export class IndexComponent implements OnInit {
 
   @ViewChild('newSwiper') newSwiper: any;
 
-  itemList = [
-    { value: '探索景點', viewValue: '探索景點' },
-    { value: '節慶活動', viewValue: '節慶活動' },
-    { value: '品嚐美食', viewValue: '品嚐美食' },
-  ];
-
-  foods = [
-    { value: 'steak-0', viewValue: 'Steak' },
-    { value: 'pizza-1', viewValue: 'Pizza' },
-    { value: 'tacos-2', viewValue: 'Tacos' },
-  ];
+  itemList = ['探索景點', '節慶活動', '品嚐美食'];
 
   defaultSelectItem = '探索景點';
 
@@ -48,11 +38,5 @@ export class IndexComponent implements OnInit {
         this.activity = activity;
       },
     });
-
-    // this.indexService.getScenicSpotCity().subscribe({
-    //   next: (res) => {
-    //     console.log(res);
-    //   },
-    // });
   }
 }

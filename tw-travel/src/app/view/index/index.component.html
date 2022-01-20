@@ -35,11 +35,11 @@
       </div>
     </div>
 
-    <div fxFlex="349px" fxLayout="column" fxLayoutGap="4px">
+    <div fxFlex="350px" fxLayout="column" fxLayoutGap="4px">
       <mat-form-field appearance="outline">
         <mat-select [(ngModel)]="defaultSelectItem">
-          <mat-option *ngFor="let item of itemList" [value]="item.value">
-            {{ item.viewValue }}
+          <mat-option *ngFor="let item of itemList" [value]="item">
+            {{ item }}
           </mat-option>
         </mat-select>
       </mat-form-field>
