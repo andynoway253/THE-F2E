@@ -40,3 +40,26 @@ export const ATTRACTIONSLIST = [
   { label: '林場類', src: '' },
   { label: '其他', src: '' },
 ];
+
+export const RESTAURANTSLIST = [
+  { label: '地方特產', src: '' },
+  { label: '中式美食', src: '' },
+  { label: '異國料理', src: '' },
+  { label: '火烤料理', src: '' },
+  { label: '夜市小吃', src: '' },
+  { label: '素食', src: '' },
+  { label: '甜點冰品', src: '' },
+  { label: '伴手禮', src: '' },
+  { label: '其他', src: '' },
+];
+
+export const ACTIVITYLIST = [
+  { label: '活動快報', src: '' },
+  { label: '年度活動', src: '' },
+  { label: '節慶活動', src: '' },
+  { label: '藝文活動', src: '' },
+  { label: '四季活動', src: '' },
+  { label: '產業文化活動', src: '' },
+  { label: '遊憩活動', src: '' },
+  { label: '其他', src: '' },
+];
