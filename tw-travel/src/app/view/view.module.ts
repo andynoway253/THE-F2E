@@ -10,14 +10,22 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ActivityDetailComponent } from './activity/activity-detail/activity-detail.component';
 import { ViewRouterModule } from './view-routing.module';
-import { BreadcrumbModule, CarouselModule } from '../shared/component';
+import {
+  BreadcrumbModule,
+  CarouselModule,
+  SearchBarModule,
+} from '../shared/component';
+import { AttractionsDetailComponent } from './attractions/attractions-detail/attractions-detail.component';
+import { RestaurantDetailComponent } from './restaurant/restaurant-detail/restaurant-detail.component';
 
 const COMPONENT = [
   IndexComponent,
   ActivityComponent,
   ActivityDetailComponent,
   AttractionsComponent,
+  AttractionsDetailComponent,
   RestaurantComponent,
+  RestaurantDetailComponent,
 ];
 
 @NgModule({
@@ -25,13 +33,15 @@ const COMPONENT = [
   imports: [
     CommonModule,
     FormsModule,
-    FlexLayoutModule,
 
     ViewRouterModule,
 
     MaterialModule,
+    FlexLayoutModule,
+
     CarouselModule,
     BreadcrumbModule,
+    SearchBarModule,
   ],
 })
 export class ViewModule {}
