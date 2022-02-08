@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CITYLIST } from '../../model/data.model';
 
 @Component({
@@ -8,6 +8,8 @@ import { CITYLIST } from '../../model/data.model';
 })
 export class SearchBarComponent {
   constructor() {}
+
+  @Input() index = '';
 
   cityList = CITYLIST;
 

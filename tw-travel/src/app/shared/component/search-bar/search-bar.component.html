@@ -8,7 +8,17 @@
   </mat-form-field>
 
   <mat-form-field fxFlex="3 0 auto" appearance="outline">
-    <input matInput placeholder="你想吃甚麼？請輸入關鍵字" value="" />
+    <input
+      matInput
+      [placeholder]="
+        index === 'Activity'
+          ? '想找有趣的？請輸入關鍵字'
+          : index === 'Attractions'
+          ? '你想去哪裡？請輸入關鍵字'
+          : '你想吃甚麼？請輸入關鍵字'
+      "
+      value=""
+    />
   </mat-form-field>
 
   <div fxFlex="1 0 auto">
