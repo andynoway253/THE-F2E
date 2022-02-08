@@ -24,7 +24,6 @@ export class BreadcrumbComponent implements OnInit {
     this.breadcrumbs = this.createBreadcrumbs(
       this.breadcrumbService.getActivatedRouteRoot()
     );
-    console.log(this.breadcrumbs);
   }
 
   ngOnDestroy(): void {
