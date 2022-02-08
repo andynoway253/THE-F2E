@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CITYLIST, THEMELIST } from 'src/app/shared/model/data.model';
+import { CITYLIST, ATTRACTIONSLIST } from 'src/app/shared/model/data.model';
 
 @Component({
   selector: 'app-attractions',
@@ -13,7 +13,7 @@ export class AttractionsComponent implements OnInit {
 
   cityList = CITYLIST;
 
-  themeList = THEMELIST;
+  themeList = ATTRACTIONSLIST;
 
   ngOnInit(): void {}
 }
