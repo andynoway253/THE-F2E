@@ -1,0 +1,105 @@
+<div
+  class="content"
+  fxLayout="column"
+  fxLayoutGap="32px"
+  fxLayoutAlign="start center"
+>
+  <div class="breadcrumb">
+    <app-breadcrumb></app-breadcrumb>
+  </div>
+
+  <div class="search" fxFlex fxLayout="row" fxLayoutGap="8px">
+    <app-search-bar [index]="currentPage"></app-search-bar>
+  </div>
+
+  <div *ngIf="!showThemeList" fxLayout="column" fxLayoutGap="32px">
+    <div class="theme" fxFlex fxLayoutAlign="start center">主題</div>
+
+    <div
+      class="themeList"
+      fxFlex
+      fxLayout="row wrap"
+      fxLayoutAlign="space-between"
+    >
+      <ng-container *ngFor="let item of themeList">
+        <div class="card" (click)="theme(item.label)">
+          <div class="title">
+            {{ item.label }}
+          </div>
+          <img src="https://fakeimg.pl/255x124/?text=Hello" />
+        </div>
+      </ng-container>
+    </div>
+  </div>
+
+  <div *ngIf="showThemeList" fxLayout="column" fxLayoutGap="32px">
+    <div class="theme" fxFlex fxLayoutGap="8px" fxLayoutAlign="start baseline">
+      <span>{{ title }}</span>
+      <span class="themeResult">搜尋結果</span>
+      <span class="themeResult">共有 {{ tempData.length }} 筆</span>
+    </div>
+
+    <div
+      class="list"
+      fxFlex
+      fxLayout="row wrap"
+      fxLayoutGap="8px grid"
+      fxLayoutAlign="space-between"
+    >
+      <ng-container *ngFor="let item of data">
+        <div class="card" fxFlex="49" fxLayout="row" routerLink="Detail">
+          <div class="img">
+            <img
+              [src]="
+                item.Picture.PictureUrl1
+                  ? item.Picture.PictureUrl1
+                  : 'https://fakeimg.pl/160x160/'
+              "
+            />
+          </div>
+          <div
+            class="content"
+            fxFlex
+            fxLayout="column"
+            fxLayoutGap="12px"
+            fxLayoutAlign="center"
+          >
+            <p *ngIf="currentPage === 'Activity'" class="name">
+              {{ item.ActivityName }}
+            </p>
+
+            <p *ngIf="currentPage === 'Restaurant'" class="name">
+              {{ item.RestaurantName }}
+            </p>
+
+            <p *ngIf="currentPage === 'ScenicSpot'" class="name">
+              {{ item.ScenicSpotName }}
+            </p>
+
+            <div class="location" fxLayout="row" fxLayoutGap="8px">
+              <img
+                style="width: 13px; height: 16px"
+                src="../../assets/img/Vector-2.png"
+              />
+              <span> {{ item.Address }} </span>
+            </div>
+
+            <p class="detail">詳細介紹</p>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+    <div fxFlex fxLayout="row" fxLayoutAlign="end center">
+      <button mat-button (click)="backTheme()">返回</button>
+      <mat-paginator
+        #paginator
+        [length]="tempData.length"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="[10, 20]"
+        (page)="pageChange($event)"
+        aria-label="Select page"
+      >
+      </mat-paginator>
+    </div>
+  </div>
+</div>
