@@ -36,11 +36,38 @@ export class BreadcrumbComponent implements OnInit {
     breadcrumbs: Array<any> = []
   ): Array<any> {
     const children = route.firstChild;
+
     if (!children) {
       return [...breadcrumbs];
     }
 
     const label = children.snapshot.data['breadcrumb'];
+
+    if (label.indexOf('/') !== '-1') {
+      let breadcrumb: Array<any> = [];
+
+      breadcrumb = label
+        .split('/')
+        .filter((item: string) => item)
+        .map((item: string, idx: number) => {
+          const routeURL: Array<string> = children.snapshot.url.map(
+            (segment) => segment.path
+          );
+
+          if (routeURL[idx]) {
+            url += `/${routeURL[idx]}`;
+          }
+          return {
+            label: item,
+            params: children.snapshot.params,
+            url: url,
+          };
+        });
+      return this.createBreadcrumbs(children, url, [
+        ...breadcrumbs,
+        ...breadcrumb,
+      ]);
+    }
 
     const routeURL: string = children.snapshot.url
       .map((segment) => segment.path)

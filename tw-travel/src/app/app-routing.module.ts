@@ -1,33 +1,53 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ActivityComponent } from './view/activity/activity.component';
-import { AttractionsComponent } from './view/attractions/attractions.component';
+import { DetailComponent } from './view/detail/detail.component';
 import { IndexComponent } from './view/index/index.component';
-import { RestaurantComponent } from './view/restaurant/restaurant.component';
+import { ThemeListComponent } from './view/themeList/themeList.component';
 
 const routes: Routes = [
   {
     path: '',
-    data: { breadcrumb: 'Index' },
+    data: { breadcrumb: '首頁' },
     children: [
       {
         path: '',
         component: IndexComponent,
       },
+
       {
         path: 'Activity',
-        component: ActivityComponent,
-        data: { breadcrumb: 'Activity' },
+        component: ThemeListComponent,
+        data: { breadcrumb: '節慶活動' },
       },
+
       {
-        path: 'Attractions',
-        component: AttractionsComponent,
-        data: { breadcrumb: 'Attractions' },
+        path: 'Activity/:id',
+        component: DetailComponent,
+        data: { breadcrumb: '/節慶活動/詳細' },
       },
+
       {
         path: 'Restaurant',
-        component: RestaurantComponent,
-        data: { breadcrumb: 'Restaurant' },
+        component: ThemeListComponent,
+        data: { breadcrumb: '品嘗美食' },
+      },
+
+      {
+        path: 'Restaurant/:id',
+        component: DetailComponent,
+        data: { breadcrumb: '/品嘗美食/詳細' },
+      },
+
+      {
+        path: 'ScenicSpot',
+        component: ThemeListComponent,
+        data: { breadcrumb: '探索景點' },
+      },
+
+      {
+        path: 'ScenicSpot/:id',
+        component: DetailComponent,
+        data: { breadcrumb: '/探索景點/詳細' },
       },
     ],
   },
