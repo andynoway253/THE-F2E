@@ -51,13 +51,12 @@
           class="card"
           fxFlex="49"
           fxLayout="row"
-          [routerLink]="
-            currentPage === 'Activity'
-              ? item.ActivityName
-              : currentPage === 'Restaurant'
-              ? item.RestaurantName
-              : item.ScenicSpotName
-          "
+          [routerLink]="'./Detail/'"
+          [queryParams]="{
+            page: currentPage,
+            name: item.name,
+            theme: item.class
+          }"
         >
           <div class="img">
             <img
@@ -75,14 +74,8 @@
             fxLayoutGap="12px"
             fxLayoutAlign="center"
           >
-            <p *ngIf="currentPage === 'Activity'" class="name">
-              {{
-                currentPage === "Activity"
-                  ? item.ActivityName
-                  : currentPage === "Restaurant"
-                  ? item.RestaurantName
-                  : item.ScenicSpotName
-              }}
+            <p class="name">
+              {{ item.name }}
             </p>
 
             <div class="location" fxLayout="row" fxLayoutGap="8px">
@@ -98,6 +91,7 @@
         </div>
       </ng-container>
     </div>
+
     <div fxFlex fxLayout="row" fxLayoutAlign="end center">
       <button mat-button (click)="backTheme()">返回</button>
       <mat-paginator

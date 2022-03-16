@@ -4,26 +4,20 @@ import {
   RESTAURANTSLIST,
   SCENICSPOT,
 } from 'src/app/shared/model/data.model';
-import { ThemeListService } from './themeList.service';
 import { PageEvent } from '@angular/material/paginator';
-import {
-  NavigationEnd,
-  NavigationError,
-  NavigationStart,
-  Router,
-} from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
+import { DataService } from 'src/app/shared/service/data.service';
 
 @Component({
   selector: 'app-themeList',
   templateUrl: './themeList.component.html',
   styleUrls: ['./themeList.component.scss'],
-  providers: [ThemeListService],
 })
 export class ThemeListComponent implements OnInit {
   constructor(
     private router: Router,
 
-    private themeListService: ThemeListService
+    private dataService: DataService
   ) {
     this.router.events.subscribe((event: any) => {
       if (event instanceof NavigationEnd) {
@@ -71,19 +65,20 @@ export class ThemeListComponent implements OnInit {
     this.title = theme;
 
     if (this.currentPage === 'Activity') {
-      observable = this.themeListService.getActivity({ theme });
+      observable = this.dataService.getActivity({ theme });
     }
 
     if (this.currentPage === 'Restaurant') {
-      observable = this.themeListService.getRestaurant({ theme });
+      observable = this.dataService.getRestaurant({ theme });
     }
 
     if (this.currentPage === 'ScenicSpot') {
-      observable = this.themeListService.getScenicSpot({ theme });
+      observable = this.dataService.getScenicSpot({ theme: theme + '類' });
     }
 
     observable.subscribe({
       next: (res: any) => {
+        console.log(res);
         this.showThemeList = true;
 
         this.data = res
@@ -96,6 +91,7 @@ export class ThemeListComponent implements OnInit {
                   : this.currentPage === 'Restaurant'
                   ? item.RestaurantName
                   : item.ScenicSpotName,
+              class: item.Class ? item.Class : item.Class1,
               ...item,
             };
           })
@@ -109,12 +105,10 @@ export class ThemeListComponent implements OnInit {
                 : this.currentPage === 'Restaurant'
                 ? item.RestaurantName
                 : item.ScenicSpotName,
+            class: item.Class ? item.Class : item.Class1,
             ...item,
           };
-        });
-
-        console.log(this.tempData);
-      },
+        });      },
     });
   }
 
