@@ -21,7 +21,7 @@ const routes: Routes = [
       },
 
       {
-        path: 'Activity/:id',
+        path: 'Activity/Detail',
         component: DetailComponent,
         data: { breadcrumb: '/節慶活動/詳細' },
       },
@@ -33,7 +33,7 @@ const routes: Routes = [
       },
 
       {
-        path: 'Restaurant/:id',
+        path: 'Restaurant/Detail',
         component: DetailComponent,
         data: { breadcrumb: '/品嘗美食/詳細' },
       },
@@ -45,7 +45,7 @@ const routes: Routes = [
       },
 
       {
-        path: 'ScenicSpot/:id',
+        path: 'ScenicSpot/Detail',
         component: DetailComponent,
         data: { breadcrumb: '/探索景點/詳細' },
       },
