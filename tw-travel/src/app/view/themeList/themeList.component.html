@@ -47,7 +47,18 @@
       fxLayoutAlign="space-between"
     >
       <ng-container *ngFor="let item of data">
-        <div class="card" fxFlex="49" fxLayout="row" routerLink="Detail">
+        <div
+          class="card"
+          fxFlex="49"
+          fxLayout="row"
+          [routerLink]="
+            currentPage === 'Activity'
+              ? item.ActivityName
+              : currentPage === 'Restaurant'
+              ? item.RestaurantName
+              : item.ScenicSpotName
+          "
+        >
           <div class="img">
             <img
               [src]="
@@ -65,15 +76,13 @@
             fxLayoutAlign="center"
           >
             <p *ngIf="currentPage === 'Activity'" class="name">
-              {{ item.ActivityName }}
-            </p>
-
-            <p *ngIf="currentPage === 'Restaurant'" class="name">
-              {{ item.RestaurantName }}
-            </p>
-
-            <p *ngIf="currentPage === 'ScenicSpot'" class="name">
-              {{ item.ScenicSpotName }}
+              {{
+                currentPage === "Activity"
+                  ? item.ActivityName
+                  : currentPage === "Restaurant"
+                  ? item.RestaurantName
+                  : item.ScenicSpotName
+              }}
             </p>
 
             <div class="location" fxLayout="row" fxLayoutGap="8px">

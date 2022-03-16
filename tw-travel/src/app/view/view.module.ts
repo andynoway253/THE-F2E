@@ -12,8 +12,9 @@ import {
 } from '../shared/component';
 import { ThemeListComponent } from './themeList/themeList.component';
 import { ViewRouterModule } from './view-routing.module';
+import { DetailComponent } from './detail/detail.component';
 
-const COMPONENT = [IndexComponent, ThemeListComponent];
+const COMPONENT = [IndexComponent, ThemeListComponent, DetailComponent];
 
 @NgModule({
   declarations: [COMPONENT],

@@ -86,8 +86,34 @@ export class ThemeListComponent implements OnInit {
       next: (res: any) => {
         this.showThemeList = true;
 
-        this.data = res.slice(0, 10);
-        this.tempData = res;
+        this.data = res
+          .map((item: any, idx: number) => {
+            return {
+              id: idx,
+              name:
+                this.currentPage === 'Activity'
+                  ? item.ActivityName
+                  : this.currentPage === 'Restaurant'
+                  ? item.RestaurantName
+                  : item.ScenicSpotName,
+              ...item,
+            };
+          })
+          .slice(0, 10);
+        this.tempData = res.map((item: any, idx: number) => {
+          return {
+            id: idx,
+            name:
+              this.currentPage === 'Activity'
+                ? item.ActivityName
+                : this.currentPage === 'Restaurant'
+                ? item.RestaurantName
+                : item.ScenicSpotName,
+            ...item,
+          };
+        });
+
+        console.log(this.tempData);
       },
     });
   }
