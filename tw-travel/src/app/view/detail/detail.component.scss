@@ -1,0 +1,73 @@
+.breadcrumb {
+  width: 1100px;
+}
+
+.carousel {
+  width: 1040px;
+  height: 400px;
+}
+
+.content {
+  width: 1080px;
+
+  .title {
+    font-size: 36px;
+  }
+
+  .introduce {
+    p:first-of-type {
+      font-size: larger;
+      font-weight: bold;
+    }
+  }
+
+  .info {
+    width: 540px;
+    height: 360px;
+    padding: 30px;
+    background-color: #f9f9ff;
+
+    .item {
+      font-weight: bold;
+    }
+
+    a:link,
+    a:visited {
+      color: #6e7d60;
+      background-color: transparent;
+      text-decoration: none;
+    }
+  }
+
+  .goolgeMap {
+    width: 540px;
+    height: 250px;
+  }
+
+  .aroundInfo {
+    width: 540px;
+    img {
+      width: 160px;
+      height: 110px;
+    }
+  }
+
+  .theme {
+    font-size: 36px;
+  }
+
+  .more {
+    color: #ff725e;
+    cursor: pointer;
+
+    &::after {
+      content: "";
+      border: solid #ff725e;
+      border-width: 0 2px 2px 0;
+      display: inline-block;
+      padding: 3px;
+      transform: rotate(-45deg);
+      -webkit-transform: rotate(-45deg);
+    }
+  }
+}

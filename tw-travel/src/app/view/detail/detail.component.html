@@ -1,10 +1,177 @@
-<div
-  class="content"
-  fxLayout="column"
-  fxLayoutGap="32px"
-  fxLayoutAlign="start center"
->
+<div fxLayout="column" fxLayoutGap="32px" fxLayoutAlign="start center">
   <div class="breadcrumb">
     <app-breadcrumb></app-breadcrumb>
+  </div>
+
+  <div class="carousel">
+    <app-carousel></app-carousel>
+  </div>
+
+  <div class="content" fxLayout="column" fxLayoutGap="24px">
+    <div class="title">
+      {{ detailData?.Name }}
+    </div>
+
+    <div class="chip">
+      <mat-chip-list aria-label="Fish selection">
+        <mat-chip>One fish</mat-chip>
+        <mat-chip>Two fish</mat-chip>
+      </mat-chip-list>
+    </div>
+
+    <div class="introduce">
+      <div *ngIf="page === 'Activity'">
+        <p>活動介紹：</p>
+
+        {{ detailData?.Description }} {{ detailData?.DescriptionDetail }}
+      </div>
+
+      <div *ngIf="page === 'Restaurant'">
+        <p>餐廳介紹：</p>
+
+        {{ detailData?.Description }}
+      </div>
+
+      <div *ngIf="page === 'ScenicSpot'">
+        <p>景點介紹：</p>
+        <p>{{ detailData?.Description }}</p>
+        <p>{{ detailData?.DescriptionDetail }}</p>
+      </div>
+    </div>
+
+    <div fxLayout="row" fxLayoutGap="16px">
+      <div
+        *ngIf="page === 'Activity'"
+        class="info"
+        fxLayout="column"
+        fxLayoutGap="12px"
+      >
+        <div>
+          <label class="item">活動時間</label>
+          <span>
+            {{ detailData?.StartTime | date: "yyyy/MM/dd HH:mm" }} -
+            {{ detailData?.EndTime | date: "yyyy/MM/dd HH:mm" }}
+          </span>
+        </div>
+
+        <div>
+          <label class="item">聯絡電話：</label>
+          <span> {{ detailData?.Phone }}</span>
+        </div>
+
+        <div>
+          <label class="item">主辦單位：</label>
+          <span> {{ detailData?.Organizer }}</span>
+        </div>
+
+        <div>
+          <label class="item">活動地點：</label>
+          <span> {{ detailData?.Location }}</span>
+        </div>
+
+        <div>
+          <label class="item">官方網站：</label>
+          <span> {{ detailData?.WebsiteUrl }}</span>
+        </div>
+
+        <!-- <div>
+          <label class="item">活動費用：</label>
+          <span> {{ detailData?.Description }}</span>
+        </div>
+
+        <div>
+          <label class="item">注意事項：</label>
+          <span> {{ detailData?.Description }}</span>
+        </div> -->
+      </div>
+
+      <div
+        *ngIf="page === 'Restaurant'"
+        class="info"
+        fxLayout="column"
+        fxLayoutGap="12px"
+      >
+        <div>
+          <label class="item">營業時間：</label>
+          <span> {{ detailData?.OpenTime }}</span>
+        </div>
+
+        <div>
+          <label class="item">聯絡電話：</label>
+          <span> {{ detailData?.Phone }}</span>
+        </div>
+
+        <div>
+          <label class="item">餐廳地址：</label>
+          <span> {{ detailData?.Address }}</span>
+        </div>
+
+        <div>
+          <label class="item">官方網站：</label>
+          <a [href]="detailData?.WebsiteUrl"> {{ detailData?.WebsiteUrl }}</a>
+        </div>
+      </div>
+
+      <div
+        *ngIf="page === 'ScenicSpot'"
+        class="info"
+        fxLayout="column"
+        fxLayoutGap="12px"
+      >
+        <div>
+          <label class="item">開放時間：</label>
+          <span> {{ detailData?.OpenTime }}</span>
+        </div>
+
+        <div>
+          <label class="item">服務電話：</label>
+          <span> {{ detailData?.Phone }}</span>
+        </div>
+
+        <div>
+          <label class="item">景點地址：</label>
+          <span> {{ detailData?.Address }}</span>
+        </div>
+
+        <div>
+          <label class="item">官方網站：</label>
+          <span> {{ detailData?.WebsiteUrl }}</span>
+        </div>
+
+        <div>
+          <label class="item">票價資訊：</label>
+          <span> {{ detailData?.TicketInfo }} {{ detailData?.Remarks }}</span>
+        </div>
+
+        <div>
+          <label class="item">注意事項：</label>
+          <span> {{ detailData?.TravelInfo }}</span>
+        </div>
+      </div>
+
+      <div fxLayout="column" fxLayoutGap="8px">
+        <div class="goolgeMap"></div>
+        <div class="aroundInfo" fxLayout="row" fxLayoutGap="30px">
+          <img src="../../assets/img/vertical03.png" />
+          <img src="../../assets/img/vertical02.png" />
+          <img src="../../assets/img/vertical01.png" />
+        </div>
+      </div>
+    </div>
+
+    <div class="other" fxFlex="380px" fxLayout="column" fxLayoutGap="16px">
+      <div fxLayout="row" fxLayoutAlign="space-between baseline">
+        <span class="theme">
+          {{
+            page === "Activity"
+              ? "還有這些不能錯過的活動"
+              : page === "Restaurant"
+              ? "還有這些不能錯過的餐廳"
+              : "還有這些不能錯過的景點"
+          }}
+        </span>
+        <span class="more"> 查看更多 </span>
+      </div>
+    </div>
   </div>
 </div>
