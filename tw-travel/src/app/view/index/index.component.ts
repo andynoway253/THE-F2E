@@ -1,15 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { forkJoin, Subject, Subscription, takeWhile } from 'rxjs';
-import { IndexService } from './index.service';
+import { forkJoin } from 'rxjs';
+import { DataService } from '../../shared/service/data.service';
 
 @Component({
   selector: 'app-index',
   templateUrl: './index.component.html',
   styleUrls: ['./index.component.scss'],
-  providers: [IndexService],
 })
 export class IndexComponent implements OnInit {
-  constructor(private indexService: IndexService) {}
+  constructor(private dataService: DataService) {}
 
   @ViewChild('newSwiper') newSwiper: any;
 
@@ -26,10 +25,10 @@ export class IndexComponent implements OnInit {
 
   ngOnInit(): void {
     forkJoin([
-      this.indexService.getScenicSpot(),
-      this.indexService.getRestaurant(),
-      this.indexService.getHotel(),
-      this.indexService.getActivity(),
+      this.dataService.getScenicSpotAll(),
+      this.dataService.getRestaurantAll(),
+      this.dataService.getHotelAll(),
+      this.dataService.getActivityAll(),
     ]).subscribe({
       next: ([scenicSpot, restaurant, hotel, activity]) => {
         this.scenicSpot = scenicSpot;
