@@ -27,13 +27,11 @@ export class IndexComponent implements OnInit {
     forkJoin([
       this.dataService.getScenicSpotAll(),
       this.dataService.getRestaurantAll(),
-      this.dataService.getHotelAll(),
       this.dataService.getActivityAll(),
     ]).subscribe({
-      next: ([scenicSpot, restaurant, hotel, activity]) => {
+      next: ([scenicSpot, restaurant, activity]) => {
         this.scenicSpot = scenicSpot;
         this.restaurant = restaurant;
-        this.hotel = hotel;
         this.activity = activity;
       },
     });

@@ -9,7 +9,10 @@
   </div>
 
   <div class="search" fxFlex fxLayout="row" fxLayoutGap="8px">
-    <app-search-bar [index]="currentPage"></app-search-bar>
+    <app-search-bar
+      [index]="currentPage"
+      (executeSearch)="search($event)"
+    ></app-search-bar>
   </div>
 
   <div *ngIf="!showThemeList" fxLayout="column" fxLayoutGap="32px">
@@ -22,7 +25,7 @@
       fxLayoutAlign="space-between"
     >
       <ng-container *ngFor="let item of themeList">
-        <div class="card" (click)="theme(item.label)">
+        <div class="card" (click)="detailList(item.label)">
           <div class="title">
             {{ item.label }}
           </div>

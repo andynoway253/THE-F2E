@@ -1,8 +1,8 @@
 <div class="search" fxFlex fxLayout="row" fxLayoutGap="8px">
   <mat-form-field fxFlex="0 0 auto" appearance="outline">
-    <mat-select [(ngModel)]="defaultSelectItem">
-      <mat-option *ngFor="let item of cityList" [value]="item">
-        {{ item }}
+    <mat-select [(ngModel)]="defaultSelectItem" placeholder="請選擇城市">
+      <mat-option *ngFor="let item of cityList" [value]="item.value">
+        {{ item.label }}
       </mat-option>
     </mat-select>
   </mat-form-field>
@@ -13,7 +13,7 @@
       [placeholder]="
         index === 'Activity'
           ? '想找有趣的？請輸入關鍵字'
-          : index === 'Attractions'
+          : index === 'ScenicSpot'
           ? '你想去哪裡？請輸入關鍵字'
           : '你想吃甚麼？請輸入關鍵字'
       "
@@ -22,7 +22,12 @@
   </mat-form-field>
 
   <div fxFlex="1 0 auto">
-    <button fxFlex mat-raised-button color="primary">
+    <button
+      fxFlex
+      mat-raised-button
+      color="primary"
+      (click)="search(defaultSelectItem)"
+    >
       <mat-icon>search</mat-icon>
       搜　　尋
     </button>

@@ -1,5 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { AlertMessageService } from './../alert-message/alert-message.service';
+import { Component, Input, Output } from '@angular/core';
 import { CITYLIST } from '../../model/data.model';
+import { EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-search-bar',
@@ -7,13 +9,24 @@ import { CITYLIST } from '../../model/data.model';
   styleUrls: ['./search-bar.component.scss'],
 })
 export class SearchBarComponent {
-  constructor() {}
+  constructor(private alertMessageService: AlertMessageService) {}
 
   @Input() index = '';
+
+  @Output() executeSearch = new EventEmitter<string>();
 
   cityList = CITYLIST;
 
   defaultSelectItem = '';
 
   ngOnInit() {}
+
+  search(event: string) {
+    if (!event) {
+      this.alertMessageService.showWarning('請先選擇城市！');
+      return;
+    }
+
+    this.executeSearch.emit(event);
+  }
 }

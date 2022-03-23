@@ -43,18 +43,33 @@ export class DetailComponent implements OnInit {
             observable = this.dataService.getScenicSpot({ theme });
           }
           return observable;
+        }),
+        switchMap((res) => {
+          this.detailData = res
+            .filter((item) => item[`${this.page}Name`] === this.name)
+            .map((item) => ({
+              ...item,
+              Name: item[`${this.page}Name`],
+            }))[0];
+
+          const { City } = this.detailData;
+
+          if (this.page === 'Activity') {
+            observable = this.dataService.getActivityCity({ City });
+          }
+
+          if (this.page === 'Restaurant') {
+            observable = this.dataService.getRestaurantCity({ City });
+          }
+
+          if (this.page === 'ScenicSpot') {
+            observable = this.dataService.getScenicSpotCity({ City });
+          }
+          return observable;
         })
       )
-      .subscribe((res) => {        console.log(res);
-
-        this.detailData = res
-          .filter((item) => item[`${this.page}Name`] === this.name)
-          .map((item) => ({
-            ...item,
-            Name: item[`${this.page}Name`],
-          }))[0];
-
-        console.log(this.detailData);
+      .subscribe((res) => {
+        console.log(res);
       });
   }
 }

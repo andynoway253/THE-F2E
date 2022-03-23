@@ -59,7 +59,11 @@ export class ThemeListComponent implements OnInit {
     }
   }
 
-  theme(theme: string) {
+  search(event: any) {
+    console.log(event);
+  }
+
+  detailList(theme: string) {
     let observable: any;
 
     this.title = theme;
@@ -108,7 +112,8 @@ export class ThemeListComponent implements OnInit {
             class: item.Class ? item.Class : item.Class1,
             ...item,
           };
-        });      },
+        });
+      },
     });
   }
 

@@ -1,3 +1,4 @@
+import { AlertMessageModule } from './../shared/component/alert-message/alert-message.module';
 import { NgModule } from '@angular/core';
 import { IndexComponent } from './index/index.component';
 
@@ -27,6 +28,7 @@ const COMPONENT = [IndexComponent, ThemeListComponent, DetailComponent];
     MaterialModule,
     FlexLayoutModule,
 
+    AlertMessageModule,
     CarouselModule,
     BreadcrumbModule,
     SearchBarModule,
