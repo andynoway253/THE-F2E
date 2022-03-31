@@ -14,6 +14,8 @@ import {
 import { ThemeListComponent } from './themeList/themeList.component';
 import { ViewRouterModule } from './view-routing.module';
 import { DetailComponent } from './detail/detail.component';
+import { GoogleMapsModule } from '@angular/google-maps';
+import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
 
 const COMPONENT = [IndexComponent, ThemeListComponent, DetailComponent];
 
@@ -27,6 +29,9 @@ const COMPONENT = [IndexComponent, ThemeListComponent, DetailComponent];
 
     MaterialModule,
     FlexLayoutModule,
+    GoogleMapsModule,
+    HttpClientModule,
+    HttpClientJsonpModule,
 
     AlertMessageModule,
     CarouselModule,
