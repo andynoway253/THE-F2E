@@ -79,13 +79,22 @@
             fxLayout="row"
             fxLayoutGap="4px"
             routerLink="/Activity/Detail"
+            [queryParams]="{
+              page: 'Activity',
+              name: item.ActivityName,
+              theme: item.Class1 ? item.Class1 : '其他'
+            }"
           >
             <div class="activityImg">
               <img
                 [src]="
                   item.Picture.PictureUrl1
                     ? item.Picture.PictureUrl1
-                    : 'https://fakeimg.pl/160x160/'
+                    : item.Picture.PictureUrl2
+                    ? item.Picture.PictureUrl2
+                    : item.Picture.PictureUrl3
+                    ? item.Picture.PictureUrl3
+                    : 'https://fakeimg.pl/255x200/'
                 "
               />
             </div>
@@ -122,7 +131,7 @@
     <div fxFlex="350px" fxLayout="column" fxLayoutGap="16px">
       <div fxLayout="row" fxLayoutAlign="space-between baseline">
         <span class="theme"> 熱門打卡景點 </span>
-        <span class="more"> 查看更多景點 </span>
+        <span class="more" routerLink="/ScenicSpot"> 查看更多景點 </span>
       </div>
 
       <div
@@ -132,12 +141,27 @@
         fxLayoutAlign="space-between"
       >
         <ng-container *ngFor="let item of scenicSpot">
-          <div class="card" fxFlex="25" fxLayout="column" fxLayoutGap="12px">
+          <div
+            class="card"
+            fxFlex="25"
+            fxLayout="column"
+            fxLayoutGap="12px"
+            routerLink="/ScenicSpot/Detail"
+            [queryParams]="{
+              page: 'ScenicSpot',
+              name: item.ScenicSpotName,
+              theme: item.Class1 ? item.Class1 : '其他'
+            }"
+          >
             <div class="img">
               <img
                 [src]="
                   item.Picture.PictureUrl1
                     ? item.Picture.PictureUrl1
+                    : item.Picture.PictureUrl2
+                    ? item.Picture.PictureUrl2
+                    : item.Picture.PictureUrl3
+                    ? item.Picture.PictureUrl3
                     : 'https://fakeimg.pl/255x200/'
                 "
               />
@@ -169,7 +193,7 @@
     <div fxFlex="380px" fxLayout="column" fxLayoutGap="16px">
       <div fxLayout="row" fxLayoutAlign="space-between baseline">
         <span class="theme"> 一再回訪美食 </span>
-        <span class="more"> 查看更多美食 </span>
+        <span class="more" routerLink="/Restaurant"> 查看更多美食 </span>
       </div>
 
       <div
@@ -179,12 +203,27 @@
         fxLayoutAlign="space-between"
       >
         <ng-container *ngFor="let item of restaurant">
-          <div class="card" fxFlex="25" fxLayout="column" fxLayoutGap="12px">
+          <div
+            class="card"
+            fxFlex="25"
+            fxLayout="column"
+            fxLayoutGap="12px"
+            routerLink="/Restaurant/Detail"
+            [queryParams]="{
+              page: 'Restaurant',
+              name: item.RestaurantName,
+              theme: item.Class
+            }"
+          >
             <div class="img">
               <img
                 [src]="
                   item.Picture.PictureUrl1
                     ? item.Picture.PictureUrl1
+                    : item.Picture.PictureUrl2
+                    ? item.Picture.PictureUrl2
+                    : item.Picture.PictureUrl3
+                    ? item.Picture.PictureUrl3
                     : 'https://fakeimg.pl/255x200/'
                 "
               />
