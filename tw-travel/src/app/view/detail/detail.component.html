@@ -4,10 +4,10 @@
   </div>
 
   <div class="carousel">
-    <app-carousel></app-carousel>
+    <app-carousel [slides]="slides"></app-carousel>
   </div>
 
-  <div class="content" fxLayout="column" fxLayoutGap="24px">
+  <div class="detailContent" fxLayout="column" fxLayoutGap="24px">
     <div class="title">
       {{ detailData?.Name }}
     </div>
@@ -73,16 +73,6 @@
           <label class="item">官方網站：</label>
           <span> {{ detailData?.WebsiteUrl }}</span>
         </div>
-
-        <!-- <div>
-          <label class="item">活動費用：</label>
-          <span> {{ detailData?.Description }}</span>
-        </div>
-
-        <div>
-          <label class="item">注意事項：</label>
-          <span> {{ detailData?.Description }}</span>
-        </div> -->
       </div>
 
       <div
@@ -150,7 +140,18 @@
       </div>
 
       <div fxLayout="column" fxLayoutGap="8px">
-        <div class="goolgeMap"></div>
+        <div class="goolgeMap" *ngIf="apiLoaded | async">
+          <google-map height="250px" width="540px" [options]="options">
+            <map-marker
+              #marker="mapMarker"
+              *ngFor="let markerPosition of markerPositions"
+              [position]="markerPosition"
+              [options]="markerOptions"
+              (mapClick)="openInfoWindow(marker)"
+            ></map-marker>
+            <map-info-window>Info Window content</map-info-window>
+          </google-map>
+        </div>
         <div class="aroundInfo" fxLayout="row" fxLayoutGap="30px">
           <img src="../../assets/img/vertical03.png" />
           <img src="../../assets/img/vertical02.png" />
@@ -171,6 +172,50 @@
           }}
         </span>
         <span class="more"> 查看更多 </span>
+      </div>
+
+      <div
+        fxFlex
+        fxLayout="row"
+        fxLayoutGap="8px"
+        fxLayoutAlign="space-between"
+      >
+        <ng-container *ngFor="let item of more">
+          <div class="card" fxFlex="25" fxLayout="column" fxLayoutGap="12px">
+            <div class="img">
+              <img
+                [src]="
+                  item.Picture.PictureUrl1
+                    ? item.Picture.PictureUrl1
+                    : 'https://fakeimg.pl/255x200/'
+                "
+              />
+            </div>
+
+            <div
+              class="content"
+              fxFlex
+              fxLayout="column"
+              fxLayoutGap="12px"
+              fxLayoutAlign="center"
+            >
+              <p class="name" [title]="item[page + 'Name']">
+                {{ item[page + "Name"] }}
+              </p>
+              <div fxLayout="row" fxLayoutAlign="space-between">
+                <div class="location" fxLayout="row" fxLayoutGap="8px">
+                  <img
+                    style="width: 13px; height: 16px"
+                    src="../../assets/img/Vector-2.png"
+                  />
+                  <span>
+                    {{ item?.City ? item?.City : item.Address.substr(0, 3) }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
       </div>
     </div>
   </div>

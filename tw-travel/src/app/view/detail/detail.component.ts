@@ -1,8 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { AlertMessageService } from './../../shared/component/alert-message/alert-message.service';
+import { CITYLIST } from './../../shared/model/data.model';
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ItemsList } from '@ng-select/ng-select/lib/items-list';
-import { map, Observable, switchMap } from 'rxjs';
+import {
+  catchError,
+  forkJoin,
+  map,
+  Observable,
+  of,
+  switchMap,
+  throwError,
+} from 'rxjs';
 import { DataService } from 'src/app/shared/service/data.service';
+import { MapInfoWindow, MapMarker } from '@angular/google-maps';
 
 @Component({
   selector: 'app-detail',
@@ -11,16 +22,44 @@ import { DataService } from 'src/app/shared/service/data.service';
 })
 export class DetailComponent implements OnInit {
   constructor(
+    private httpClient: HttpClient,
+
     private route: ActivatedRoute,
 
-    private dataService: DataService
-  ) {}
+    private dataService: DataService,
+
+    private alertMessageService: AlertMessageService
+  ) {
+    this.apiLoaded = this.httpClient
+      .jsonp(
+        'https://maps.googleapis.com/maps/api/js?key=AIzaSyB7S4gvD6MD_FoDchVRATTCa9vXDpOAmag',
+        'callback'
+      )
+      .pipe(
+        map(() => true),
+        catchError(() => of(false))
+      );
+  }
+
+  @ViewChild(MapInfoWindow) infoWindow: MapInfoWindow;
+
+  apiLoaded: Observable<boolean>;
+
+  options: google.maps.MapOptions;
+
+  markerOptions: google.maps.MarkerOptions = { draggable: false };
+
+  markerPositions: google.maps.LatLngLiteral[] = [];
 
   name: string;
 
   page: string;
 
   detailData: any;
+
+  more: Array<any> = [];
+
+  slides: Array<{ image: string; alt: string }> = [];
 
   ngOnInit(): void {
     let observable: Observable<Array<any>>;
@@ -31,17 +70,12 @@ export class DetailComponent implements OnInit {
           this.page = page;
           this.name = name;
 
-          if (page === 'Activity') {
-            observable = this.dataService.getActivity({ theme });
-          }
+          page === 'Activity'
+            ? (observable = this.dataService.getActivity({ theme }))
+            : page === 'Restaurant'
+            ? (observable = this.dataService.getRestaurant({ theme }))
+            : (observable = this.dataService.getScenicSpot({ theme }));
 
-          if (page === 'Restaurant') {
-            observable = this.dataService.getRestaurant({ theme });
-          }
-
-          if (page === 'ScenicSpot') {
-            observable = this.dataService.getScenicSpot({ theme });
-          }
           return observable;
         }),
         switchMap((res) => {
@@ -52,24 +86,95 @@ export class DetailComponent implements OnInit {
               Name: item[`${this.page}Name`],
             }))[0];
 
-          const { City } = this.detailData;
+          const { Address, City, Position, Picture } = this.detailData;
+          const cityEng = City
+            ? CITYLIST.filter((item) => item.label === City)[0].value
+            : Address
+            ? CITYLIST.filter((item) => item.label === Address.substr(0, 3))[0]
+                .value
+            : null;
 
-          if (this.page === 'Activity') {
-            observable = this.dataService.getActivityCity({ City });
+          if (Picture.PictureUrl1) {
+            this.slides.push({
+              image: Picture.PictureUrl1,
+              alt: Picture.PictureDescription1,
+            });
           }
 
-          if (this.page === 'Restaurant') {
-            observable = this.dataService.getRestaurantCity({ City });
+          if (Picture.PictureUrl2) {
+            this.slides.push({
+              image: Picture.PictureUrl2,
+              alt: Picture.PictureDescription2,
+            });
           }
 
-          if (this.page === 'ScenicSpot') {
-            observable = this.dataService.getScenicSpotCity({ City });
+          if (Picture.PictureUrl3) {
+            this.slides.push({
+              image: Picture.PictureUrl3,
+              alt: Picture.PictureDescription3,
+            });
           }
-          return observable;
+
+          this.options = {
+            center: { lat: Position.PositionLat, lng: Position.PositionLon },
+            zoom: 15,
+          };
+
+          this.markerPositions.push({
+            lat: Position.PositionLat,
+            lng: Position.PositionLon,
+          });
+
+          if (cityEng) {
+            return forkJoin([
+              this.dataService.getActivityCity({ City: cityEng }),
+              this.dataService.getRestaurantCity({ City: cityEng }),
+              this.dataService.getScenicSpotCity({ City: cityEng }),
+            ]);
+          }
+
+          return throwError(() => new Error());
         })
       )
-      .subscribe((res) => {
-        console.log(res);
+      .subscribe({
+        next: ([activity, restaurant, scenicSpot]) => {
+          if (this.page === 'Activity') {
+            this.getRandomData(activity);
+          } else if (this.page === 'Restaurant') {
+            this.getRandomData(restaurant);
+          } else {
+            this.getRandomData(scenicSpot);
+          }
+        },
+        error: () => {
+          this.alertMessageService.showError('公開資料缺少資料');
+        },
       });
+  }
+
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+  }
+
+  getRandomData(data: Array<any>) {
+    let json: any = {};
+    this.more = [];
+    if (data.length <= 4) {
+      this.more = data;
+    } else {
+      while (this.more.length < 4) {
+        let i = Math.round(Math.random() * data.length);
+        if (!json[i] && data[i]) {
+          json[i] = true;
+          this.more.push(data[i]);
+        }
+      }
+    }
+    console.log(this.more);
+  }
+
+  openInfoWindow(marker: MapMarker) {
+    this.infoWindow.open(marker);
   }
 }
