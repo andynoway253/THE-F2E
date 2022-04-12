@@ -1,6 +1,8 @@
+import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import {
   ACTIVITYLIST,
+  CITYLIST,
   RESTAURANTSLIST,
   SCENICSPOT,
 } from 'src/app/shared/model/data.model';
@@ -26,7 +28,7 @@ export class ThemeListComponent implements OnInit {
     });
   }
 
-  themeList: Array<{ label: string; src: string }> = [];
+  themeList: Array<{ label: string; src: string }> = []; // 分類列表
 
   currentPage = '';
 
@@ -59,11 +61,27 @@ export class ThemeListComponent implements OnInit {
     }
   }
 
-  search(event: any) {
-    console.log(event);
+  searchByCity(cityEng: string) {
+    let observable: any;
+
+    this.title = CITYLIST.filter((item) => item.value === cityEng)[0].label;
+
+    if (this.currentPage === 'Activity') {
+      observable = this.dataService.getActivityCity({ City: cityEng });
+    }
+
+    if (this.currentPage === 'Restaurant') {
+      observable = this.dataService.getRestaurantCity({ City: cityEng });
+    }
+
+    if (this.currentPage === 'ScenicSpot') {
+      observable = this.dataService.getScenicSpotCity({ City: cityEng });
+    }
+
+    this.getData(observable);
   }
 
-  detailList(theme: string) {
+  searchByTheme(theme: string) {
     let observable: any;
 
     this.title = theme;
@@ -80,6 +98,10 @@ export class ThemeListComponent implements OnInit {
       observable = this.dataService.getScenicSpot({ theme: theme + '類' });
     }
 
+    this.getData(observable);
+  }
+
+  getData(observable: Observable<any>) {
     observable.subscribe({
       next: (res: any) => {
         console.log(res);
