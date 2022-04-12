@@ -16,8 +16,8 @@ export class DataService extends BaseService {
     return this.get('v2/Tourism/ScenicSpot?%24top=4&%24format=JSON');
   }
 
-  getScenicSpotCity(params: { City: string }): Observable<Array<any>> {
-    return this.get('/v2/Tourism/ScenicSpot/' + `${params.City}`);
+  getScenicSpotByCity(params: { city: string }): Observable<Array<any>> {
+    return this.get('/v2/Tourism/ScenicSpot/' + `${params.city}`);
   }
 
   getScenicSpot(params: { theme: string }): Observable<Array<any>> {
@@ -30,8 +30,8 @@ export class DataService extends BaseService {
     return this.get('/v2/Tourism/Restaurant?%24top=4&%24format=JSON');
   }
 
-  getRestaurantCity(params: { City: string }): Observable<Array<any>> {
-    return this.get('/v2/Tourism/Restaurant/' + `${params.City}`);
+  getRestaurantByCity(params: { city: string }): Observable<Array<any>> {
+    return this.get('/v2/Tourism/Restaurant/' + `${params.city}`);
   }
 
   getRestaurant(params: { theme: string }): Observable<Array<any>> {
@@ -44,8 +44,8 @@ export class DataService extends BaseService {
     return this.get('v2/Tourism/Activity?%24top=4&%24format=JSON');
   }
 
-  getActivityCity(params: { City: string }): Observable<Array<any>> {
-    return this.get('/v2/Tourism/Activity/' + `${params.City}`);
+  getActivityByCity(params: { city: string }): Observable<Array<any>> {
+    return this.get('/v2/Tourism/Activity/' + `${params.city}`);
   }
 
   getActivity(params: { theme: string }): Observable<Array<any>> {
