@@ -6,6 +6,14 @@ import { AlertMessageComponent } from './alert-message.component';
 export class AlertMessageService {
   constructor(private dialogRef: MatDialog) {}
 
+  showInfo(content: string, title = '訊息', style = 'primary') {
+    return this.open({
+      content,
+      title,
+      style,
+    });
+  }
+
   showSuccess(content: string, title = '成功', style = 'primary') {
     return this.open({
       content,

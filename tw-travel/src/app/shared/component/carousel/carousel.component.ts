@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { ThisReceiver } from '@angular/compiler';
+import { Component, Input } from '@angular/core';
 import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
 
 @Component({
@@ -9,6 +10,8 @@ import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
 export class CarouselComponent {
   constructor() {}
 
+  @Input() slides: Array<{ image: string; alt: string }> = [];
+
   config: SwiperConfigInterface = {
     direction: 'horizontal',
     slidesPerView: 1,
@@ -18,13 +21,15 @@ export class CarouselComponent {
     pagination: true,
   };
 
-  slides = [
-    'https://fakeimg.pl/1040x400/',
-    'https://fakeimg.pl/1040x400/',
-    'https://fakeimg.pl/1040x400/',
-  ];
-
-  ngOnInit() {}
+  ngOnInit() {
+    this.slides = this.slides.length
+      ? this.slides
+      : [
+          { image: 'https://fakeimg.pl/1040x400/', alt: '' },
+          { image: 'https://fakeimg.pl/1040x400/', alt: '' },
+          { image: 'https://fakeimg.pl/1040x400/', alt: '' },
+        ];
+  }
 
   ngAfterViewInit() {}
 

@@ -23,7 +23,7 @@ export class SearchBarComponent {
 
   search(event: string) {
     if (!event) {
-      this.alertMessageService.showWarning('請先選擇城市！');
+      this.alertMessageService.showInfo('請先選擇城市！');
       return;
     }
 
