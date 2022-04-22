@@ -16,7 +16,11 @@ import { EventEmitter } from '@angular/core';
 export class SearchBarComponent {
   constructor(private alertMessageService: AlertMessageService) {}
 
-  @Input() page = '';
+  @Input() page: string | undefined = '';
+
+  @Input() set theme(value: any) {
+    this.selectTheme = value;
+  }
 
   @Output() executeSearch = new EventEmitter<{
     selectCity: string;

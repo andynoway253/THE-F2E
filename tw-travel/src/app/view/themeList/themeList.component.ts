@@ -28,9 +28,11 @@ export class ThemeListComponent implements OnInit {
     });
   }
 
-  themeList: Array<{ label: string; src: string }> = []; // 分類列表
+  themeList: Array<{ label: string; value: any; src: string }> = []; // 分類列表
 
-  currentPage = '';
+  currentPage: string | undefined = '';
+
+  currentTheme: string | undefined = '';
 
   pageSize = 10;
 
@@ -63,13 +65,15 @@ export class ThemeListComponent implements OnInit {
     let observable: any;
 
     const { selectCity, selectTheme } = params;
-    console.log(selectCity);
-    console.log(selectTheme);
 
+    this.currentTheme = selectTheme;
     switch (this.currentPage) {
       case 'Activity':
         observable = selectCity
-          ? this.dataService.getActivityByCity({ city: selectCity, theme: selectTheme })
+          ? this.dataService.getActivityByCity({
+              city: selectCity,
+              theme: selectTheme,
+            })
           : this.dataService.getActivity({ theme: selectTheme });
         break;
 
@@ -89,13 +93,8 @@ export class ThemeListComponent implements OnInit {
         break;
     }
 
-    this.getData(observable);
-  }
-
-  getData(observable: Observable<any>) {
     observable.subscribe({
       next: (res: any) => {
-        console.log(res);
         this.showThemeList = true;
 
         this.data = res

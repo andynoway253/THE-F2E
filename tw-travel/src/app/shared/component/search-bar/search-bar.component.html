@@ -9,7 +9,7 @@
 
   <mat-form-field fxFlex="0 0 auto" appearance="outline">
     <mat-select [(ngModel)]="selectTheme" placeholder="請選擇主題">
-      <mat-option *ngFor="let item of themeList" [value]="item.label">
+      <mat-option *ngFor="let item of themeList" [value]="item.value">
         {{ item.label }}
       </mat-option>
     </mat-select>

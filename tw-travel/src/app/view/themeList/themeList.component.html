@@ -5,12 +5,13 @@
   fxLayoutAlign="start center"
 >
   <div class="breadcrumb">
-    <app-breadcrumb></app-breadcrumb>
+    <app-breadcrumb (showThemeList)="backTheme()"></app-breadcrumb>
   </div>
 
   <div class="search" fxFlex fxLayout="row" fxLayoutGap="8px">
     <app-search-bar
       [page]="currentPage"
+      [theme]="currentTheme"
       (executeSearch)="search($event)"
     ></app-search-bar>
   </div>
@@ -25,12 +26,14 @@
       fxLayoutAlign="space-between"
     >
       <ng-container *ngFor="let item of themeList">
-        <div class="card" (click)="search({ selectTheme: item.label })">
-          <div class="title">
-            {{ item.label }}
+        <ng-container *ngIf="item.value">
+          <div class="card" (click)="search({ selectTheme: item.label })">
+            <div class="title">
+              {{ item.label }}
+            </div>
+            <img src="https://fakeimg.pl/255x124/?text=Hello" />
           </div>
-          <img src="https://fakeimg.pl/255x124/?text=Hello" />
-        </div>
+        </ng-container>
       </ng-container>
     </div>
   </div>
