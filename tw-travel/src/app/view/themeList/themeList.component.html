@@ -10,8 +10,8 @@
 
   <div class="search" fxFlex fxLayout="row" fxLayoutGap="8px">
     <app-search-bar
-      [index]="currentPage"
-      (executeSearch)="searchByCity($event)"
+      [page]="currentPage"
+      (executeSearch)="search($event)"
     ></app-search-bar>
   </div>
 
@@ -25,7 +25,7 @@
       fxLayoutAlign="space-between"
     >
       <ng-container *ngFor="let item of themeList">
-        <div class="card" (click)="searchByTheme(item.label)">
+        <div class="card" (click)="search({ selectTheme: item.label })">
           <div class="title">
             {{ item.label }}
           </div>
@@ -37,9 +37,8 @@
 
   <div *ngIf="showThemeList" fxLayout="column" fxLayoutGap="32px">
     <div class="theme" fxFlex fxLayoutGap="8px" fxLayoutAlign="start baseline">
-      <span>{{ title }}</span>
-      <span class="themeResult">搜尋結果</span>
-      <span class="themeResult">共有 {{ tempData.length }} 筆</span>
+      <span>搜尋結果</span>
+      <span class="themeResultCount">共有 {{ tempData.length }} 筆</span>
     </div>
 
     <div
