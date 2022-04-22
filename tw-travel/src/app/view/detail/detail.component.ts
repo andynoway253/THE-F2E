@@ -127,9 +127,9 @@ export class DetailComponent implements OnInit {
 
           if (cityEng) {
             return forkJoin([
-              this.dataService.getActivityCity({ City: cityEng }),
-              this.dataService.getRestaurantCity({ City: cityEng }),
-              this.dataService.getScenicSpotCity({ City: cityEng }),
+              this.dataService.getActivityByCity({ city: cityEng }),
+              this.dataService.getRestaurantByCity({ city: cityEng }),
+              this.dataService.getScenicSpotByCity({ city: cityEng }),
             ]);
           }
 
@@ -152,11 +152,6 @@ export class DetailComponent implements OnInit {
       });
   }
 
-  ngOnDestroy(): void {
-    //Called once, before the instance is destroyed.
-    //Add 'implements OnDestroy' to the class.
-  }
-
   getRandomData(data: Array<any>) {
     let json: any = {};
     this.more = [];
@@ -171,7 +166,6 @@ export class DetailComponent implements OnInit {
         }
       }
     }
-    console.log(this.more);
   }
 
   openInfoWindow(marker: MapMarker) {
