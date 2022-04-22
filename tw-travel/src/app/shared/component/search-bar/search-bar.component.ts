@@ -1,3 +1,8 @@
+import {
+  ACTIVITYLIST,
+  RESTAURANTSLIST,
+  SCENICSPOT,
+} from './../../model/data.model';
 import { AlertMessageService } from './../alert-message/alert-message.service';
 import { Component, Input, Output } from '@angular/core';
 import { CITYLIST } from '../../model/data.model';
@@ -11,22 +16,35 @@ import { EventEmitter } from '@angular/core';
 export class SearchBarComponent {
   constructor(private alertMessageService: AlertMessageService) {}
 
-  @Input() index = '';
+  @Input() page = '';
 
-  @Output() executeSearch = new EventEmitter<string>();
+  @Output() executeSearch = new EventEmitter<{
+    selectCity: string;
+    selectTheme: string;
+  }>();
 
   cityList = CITYLIST;
 
-  defaultSelectItem = '';
+  themeList: any;
 
-  ngOnInit() {}
+  selectCity = '';
 
-  search(event: string) {
-    if (!event) {
-      this.alertMessageService.showInfo('請先選擇城市！');
+  selectTheme = '';
+
+  ngOnInit() {
+    this.page === 'Activity'
+      ? (this.themeList = ACTIVITYLIST)
+      : this.page === 'ScenicSpot'
+      ? (this.themeList = SCENICSPOT)
+      : (this.themeList = RESTAURANTSLIST);
+  }
+
+  search(params: { selectCity: string; selectTheme: string }) {
+    if (!params.selectCity && !params.selectTheme) {
+      this.alertMessageService.showInfo('請先選擇城市或主題！');
       return;
     }
 
-    this.executeSearch.emit(event);
+    this.executeSearch.emit(params);
   }
 }
