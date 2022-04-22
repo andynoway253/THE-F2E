@@ -32,8 +32,6 @@ export class ThemeListComponent implements OnInit {
 
   currentPage = '';
 
-  title = '';
-
   pageSize = 10;
 
   data: any = [];
@@ -61,41 +59,34 @@ export class ThemeListComponent implements OnInit {
     }
   }
 
-  searchByCity(cityEng: string) {
+  search(params: { selectCity?: string; selectTheme?: string }) {
     let observable: any;
 
-    this.title = CITYLIST.filter((item) => item.value === cityEng)[0].label;
+    const { selectCity, selectTheme } = params;
+    console.log(selectCity);
+    console.log(selectTheme);
 
-    if (this.currentPage === 'Activity') {
-      observable = this.dataService.getActivityCity({ City: cityEng });
-    }
+    switch (this.currentPage) {
+      case 'Activity':
+        observable = selectCity
+          ? this.dataService.getActivityByCity({ city: selectCity, theme: selectTheme })
+          : this.dataService.getActivity({ theme: selectTheme });
+        break;
 
-    if (this.currentPage === 'Restaurant') {
-      observable = this.dataService.getRestaurantCity({ City: cityEng });
-    }
+      case 'ScenicSpot':
+        observable = selectCity
+          ? this.dataService.getScenicSpotByCity({ city: selectCity })
+          : this.dataService.getScenicSpot({ theme: selectTheme });
+        break;
 
-    if (this.currentPage === 'ScenicSpot') {
-      observable = this.dataService.getScenicSpotCity({ City: cityEng });
-    }
+      case 'Restaurant':
+        observable = selectCity
+          ? this.dataService.getRestaurantByCity({ city: selectCity })
+          : this.dataService.getRestaurant({ theme: selectTheme });
+        break;
 
-    this.getData(observable);
-  }
-
-  searchByTheme(theme: string) {
-    let observable: any;
-
-    this.title = theme;
-
-    if (this.currentPage === 'Activity') {
-      observable = this.dataService.getActivity({ theme });
-    }
-
-    if (this.currentPage === 'Restaurant') {
-      observable = this.dataService.getRestaurant({ theme });
-    }
-
-    if (this.currentPage === 'ScenicSpot') {
-      observable = this.dataService.getScenicSpot({ theme: theme + '類' });
+      default:
+        break;
     }
 
     this.getData(observable);
