@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BreadcrumbService } from './breadcrumb.service';
 
@@ -10,7 +10,9 @@ import { BreadcrumbService } from './breadcrumb.service';
 export class BreadcrumbComponent implements OnInit {
   constructor(private breadcrumbService: BreadcrumbService) {}
 
-  public breadcrumbs: Array<any> = [];
+  @Output() showThemeList = new EventEmitter<any>();
+
+  breadcrumbs: Array<any> = [];
 
   aaaSubscription: any;
 
@@ -83,5 +85,9 @@ export class BreadcrumbComponent implements OnInit {
     };
 
     return this.createBreadcrumbs(children, url, [...breadcrumbs, breadcrumb]);
+  }
+
+  breadClick() {
+    this.showThemeList.emit();
   }
 }
