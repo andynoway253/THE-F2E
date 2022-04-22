@@ -1,4 +1,5 @@
 export const CITYLIST = [
+  { label: '--', value: null },
   { label: '基隆市', value: 'Keelung' },
   { label: '臺北市', value: 'Taipei' },
   { label: '新北市', value: 'NewTaipei' },
