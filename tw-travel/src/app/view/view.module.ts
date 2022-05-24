@@ -11,13 +11,13 @@ import {
   CarouselModule,
   SearchBarModule,
 } from '../shared/component';
-import { ThemeListComponent } from './themeList/themeList.component';
+import { ThemeComponent } from './theme/theme.component';
 import { ViewRouterModule } from './view-routing.module';
 import { DetailComponent } from './detail/detail.component';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
 
-const COMPONENT = [IndexComponent, ThemeListComponent, DetailComponent];
+const COMPONENT = [IndexComponent, ThemeComponent, DetailComponent];
 
 @NgModule({
   declarations: [COMPONENT],
