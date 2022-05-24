@@ -17,18 +17,19 @@ export class IndexComponent implements OnInit {
   defaultSelectItem = '探索景點';
 
   scenicSpot: any = [];
+
   restaurant: any = [];
+
   hotel: any = [];
+
   activity: any = [];
 
-  aSubscription: any;
-
   ngOnInit(): void {
-    forkJoin([
-      this.dataService.getScenicSpotAll(),
-      this.dataService.getRestaurantAll(),
-      this.dataService.getActivityAll(),
-    ]).subscribe({
+    forkJoin(
+      ['ScenicSpot', 'Restaurant', 'Activity'].map((category) =>
+        this.dataService.getDataAll({ category })
+      )
+    ).subscribe({
       next: ([scenicSpot, restaurant, activity]) => {
         this.scenicSpot = scenicSpot;
         this.restaurant = restaurant;
