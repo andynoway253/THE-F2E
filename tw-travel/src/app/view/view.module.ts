@@ -16,8 +16,14 @@ import { ViewRouterModule } from './view-routing.module';
 import { DetailComponent } from './detail/detail.component';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
+import { ResultComponent } from './result/result.component';
 
-const COMPONENT = [IndexComponent, ThemeComponent, DetailComponent];
+const COMPONENT = [
+  IndexComponent,
+  ThemeComponent,
+  ResultComponent,
+  DetailComponent,
+];
 
 @NgModule({
   declarations: [COMPONENT],

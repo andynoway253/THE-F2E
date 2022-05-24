@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DetailComponent } from './view/detail/detail.component';
 import { IndexComponent } from './view/index/index.component';
-import { ThemeListComponent } from './view/themeList/themeList.component';
+import { ResultComponent } from './view/result/result.component';
+import { ThemeComponent } from './view/theme/theme.component';
 
 const routes: Routes = [
   {
@@ -16,38 +17,56 @@ const routes: Routes = [
 
       {
         path: 'Activity',
-        component: ThemeListComponent,
+        component: ThemeComponent,
         data: { breadcrumb: '節慶活動' },
       },
 
       {
-        path: 'Activity/Detail',
+        path: 'Activity/Result',
+        component: ResultComponent,
+        data: { breadcrumb: '/節慶活動/結果' },
+      },
+
+      {
+        path: 'Activity/Result/Detail',
         component: DetailComponent,
-        data: { breadcrumb: '/節慶活動/詳細' },
+        data: { breadcrumb: '/節慶活動/結果/詳細' },
       },
 
       {
         path: 'Restaurant',
-        component: ThemeListComponent,
+        component: ThemeComponent,
         data: { breadcrumb: '品嘗美食' },
       },
 
       {
-        path: 'Restaurant/Detail',
+        path: 'Restaurant/Result',
+        component: ResultComponent,
+        data: { breadcrumb: '品嘗美食/結果' },
+      },
+
+      {
+        path: 'Restaurant/Result/Detail',
         component: DetailComponent,
-        data: { breadcrumb: '/品嘗美食/詳細' },
+        data: { breadcrumb: '/品嘗美食/結果/詳細' },
       },
 
       {
         path: 'ScenicSpot',
-        component: ThemeListComponent,
+        component: ThemeComponent,
         data: { breadcrumb: '探索景點' },
       },
 
       {
-        path: 'ScenicSpot/Detail',
+        path: 'ScenicSpot/Result',
+        component: ResultComponent,
+        data: { breadcrumb: '探索景點/結果' },
+      },
+
+      {
+        path: 'ScenicSpot/Result/Detail',
         component: DetailComponent,
-        data: { breadcrumb: '/探索景點/詳細' },
+        data: { breadcrumb: '/探索景點/結果/詳細' },
       },
     ],
   },
