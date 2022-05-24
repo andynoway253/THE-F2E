@@ -55,6 +55,8 @@ export class DetailComponent implements OnInit {
 
   page: string;
 
+  theme: string;
+
   detailData: any;
 
   more: Array<any> = [];
@@ -69,6 +71,7 @@ export class DetailComponent implements OnInit {
           const { page, name, theme } = queryParams.params;
           this.page = page;
           this.name = name;
+          this.theme = theme;
 
           page === 'Activity'
             ? (observable = this.dataService.getActivity({ theme }))
@@ -126,25 +129,33 @@ export class DetailComponent implements OnInit {
           });
 
           if (cityEng) {
-            return forkJoin([
-              this.dataService.getActivityByCity({ city: cityEng }),
-              this.dataService.getRestaurantByCity({ city: cityEng }),
-              this.dataService.getScenicSpotByCity({ city: cityEng }),
-            ]);
+            this.page === 'Activity'
+              ? (observable = this.dataService.getDataByCity({
+                  category: this.page,
+                  city: cityEng,
+                  theme: this.theme,
+                }))
+              : this.page === 'Restaurant'
+              ? (observable = this.dataService.getDataByCity({
+                  category: this.page,
+                  city: cityEng,
+                  theme: this.theme,
+                }))
+              : (observable = this.dataService.getDataByCity({
+                  category: this.page,
+                  city: cityEng,
+                  theme: this.theme,
+                }));
+
+            return observable;
           }
 
           return throwError(() => new Error());
         })
       )
       .subscribe({
-        next: ([activity, restaurant, scenicSpot]) => {
-          if (this.page === 'Activity') {
-            this.getRandomData(activity);
-          } else if (this.page === 'Restaurant') {
-            this.getRandomData(restaurant);
-          } else {
-            this.getRandomData(scenicSpot);
-          }
+        next: (res) => {
+          this.getRandomData(res);
         },
         error: () => {
           this.alertMessageService.showError('公開資料缺少資料');
