@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class BreadcrumbService {
@@ -8,7 +8,9 @@ export class BreadcrumbService {
 
   private root: ActivatedRoute = new ActivatedRoute();
 
-  public routeEvent = new BehaviorSubject<any>(null);
+  routeEvent = new BehaviorSubject<any>(null);
+
+  setResultParams = new BehaviorSubject<any>(null); // 記錄搜尋結果的qeuryParams
 
   public setActivatedRouteRoot(root: ActivatedRoute): void {
     this.root = root;

@@ -1,35 +1,39 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Subscription, switchMap } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { BreadcrumbService } from './breadcrumb.service';
 
 @Component({
   selector: 'app-breadcrumb',
   templateUrl: './breadcrumb.component.html',
-  styleUrls: ['./breadcrumb.component.scss'],
 })
 export class BreadcrumbComponent implements OnInit {
   constructor(private breadcrumbService: BreadcrumbService) {}
 
-  @Output() showThemeList = new EventEmitter<any>();
-
   breadcrumbs: Array<any> = [];
 
-  aaaSubscription: any;
+  breadSubscription: Subscription;
+
+  resultParams: any;
 
   ngOnInit(): void {
-    this.aaaSubscription = this.breadcrumbService.routeEvent.subscribe({
-      next: (root: ActivatedRoute) => {
-        this.breadcrumbs = this.createBreadcrumbs(root);
-      },
-    });
+    this.breadSubscription = this.breadcrumbService.setResultParams
+      .pipe(
+        switchMap((res) => {
+          this.resultParams = res;
 
-    this.breadcrumbs = this.createBreadcrumbs(
-      this.breadcrumbService.getActivatedRouteRoot()
-    );
+          return this.breadcrumbService.routeEvent;
+        })
+      )
+      .subscribe({
+        next: (root: ActivatedRoute) => {
+          this.breadcrumbs = this.createBreadcrumbs(root);
+        },
+      });
   }
 
   ngOnDestroy(): void {
-    this.aaaSubscription.unsubscribe();
+    this.breadSubscription.unsubscribe();
   }
 
   private createBreadcrumbs(
@@ -45,49 +49,36 @@ export class BreadcrumbComponent implements OnInit {
 
     const label = children.snapshot.data['breadcrumb'];
 
-    if (label.indexOf('/') !== '-1') {
-      let breadcrumb: Array<any> = [];
+    let breadcrumb: Array<any> = [];
+    breadcrumb = label
+      .split('/')
+      .filter((item: string) => item)
+      .map((label: string, idx: number) => {
+        const routeURL: Array<string> = children.snapshot.url.map(
+          (segment) => segment.path
+        );
 
-      breadcrumb = label
-        .split('/')
-        .filter((item: string) => item)
-        .map((item: string, idx: number) => {
-          const routeURL: Array<string> = children.snapshot.url.map(
-            (segment) => segment.path
-          );
+        if (routeURL[idx]) {
+          url += `/${routeURL[idx]}`;
+        }
 
-          if (routeURL[idx]) {
-            url += `/${routeURL[idx]}`;
-          }
+        if (label === '搜尋結果') {
           return {
-            label: item,
-            params: children.snapshot.params,
-            url: url,
+            label,
+            params: this.resultParams?.queryParams,
+            url,
           };
-        });
-      return this.createBreadcrumbs(children, url, [
-        ...breadcrumbs,
-        ...breadcrumb,
-      ]);
-    }
+        }
 
-    const routeURL: string = children.snapshot.url
-      .map((segment) => segment.path)
-      .join('/');
-    if (routeURL !== '') {
-      url += `/${routeURL}`;
-    }
+        return {
+          label,
+          url,
+        };
+      });
 
-    const breadcrumb = {
-      label: label,
-      params: children.snapshot.params,
-      url: url,
-    };
-
-    return this.createBreadcrumbs(children, url, [...breadcrumbs, breadcrumb]);
-  }
-
-  breadClick() {
-    this.showThemeList.emit();
+    return this.createBreadcrumbs(children, url, [
+      ...breadcrumbs,
+      ...breadcrumb,
+    ]);
   }
 }

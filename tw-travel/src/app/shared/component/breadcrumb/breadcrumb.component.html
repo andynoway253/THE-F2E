@@ -6,12 +6,13 @@
       color="primary"
       [disableRipple]="true"
       [routerLink]="[breadcrumb.url]"
+      [queryParams]="breadcrumb.params"
     >
       {{ breadcrumb.label }}
     </a>
 
     <ng-container *ngIf="lastRecord">
-      <a mat-button [disableRipple]="true" (click)="breadClick()">
+      <a mat-button [disableRipple]="true">
         {{ breadcrumb.label }}
       </a>
     </ng-container>
