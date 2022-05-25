@@ -1,0 +1,40 @@
+<div
+  class="content"
+  fxLayout="column"
+  fxLayoutGap="32px"
+  fxLayoutAlign="start center"
+>
+  <div class="breadcrumb">
+    <app-breadcrumb></app-breadcrumb>
+  </div>
+
+  <div class="search" fxFlex fxLayout="row" fxLayoutGap="8px">
+    <app-search-bar
+      [page]="currentCategory"
+      [theme]="currentTheme"
+      (executeSearch)="search($event)"
+    ></app-search-bar>
+  </div>
+
+  <div fxLayout="column" fxLayoutGap="32px">
+    <div class="theme" fxFlex fxLayoutAlign="start center">主題</div>
+
+    <div
+      class="themeList"
+      fxFlex
+      fxLayout="row wrap"
+      fxLayoutAlign="space-between"
+    >
+      <ng-container *ngFor="let item of themeList">
+        <ng-container *ngIf="item.value">
+          <div class="card" (click)="search({ selectTheme: item.label })">
+            <div class="title">
+              {{ item.label }}
+            </div>
+            <img src="https://fakeimg.pl/255x124/?text=Hello" />
+          </div>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
+</div>
