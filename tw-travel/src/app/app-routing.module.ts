@@ -24,13 +24,13 @@ const routes: Routes = [
       {
         path: 'Activity/Result',
         component: ResultComponent,
-        data: { breadcrumb: '/節慶活動/結果' },
+        data: { breadcrumb: '/節慶活動/搜尋結果' },
       },
 
       {
         path: 'Activity/Result/Detail',
         component: DetailComponent,
-        data: { breadcrumb: '/節慶活動/結果/詳細' },
+        data: { breadcrumb: '/節慶活動/搜尋結果/詳細' },
       },
 
       {
@@ -42,13 +42,13 @@ const routes: Routes = [
       {
         path: 'Restaurant/Result',
         component: ResultComponent,
-        data: { breadcrumb: '品嘗美食/結果' },
+        data: { breadcrumb: '品嘗美食/搜尋結果' },
       },
 
       {
         path: 'Restaurant/Result/Detail',
         component: DetailComponent,
-        data: { breadcrumb: '/品嘗美食/結果/詳細' },
+        data: { breadcrumb: '/品嘗美食/搜尋結果/詳細' },
       },
 
       {
@@ -60,13 +60,13 @@ const routes: Routes = [
       {
         path: 'ScenicSpot/Result',
         component: ResultComponent,
-        data: { breadcrumb: '探索景點/結果' },
+        data: { breadcrumb: '探索景點/搜尋結果' },
       },
 
       {
         path: 'ScenicSpot/Result/Detail',
         component: DetailComponent,
-        data: { breadcrumb: '/探索景點/結果/詳細' },
+        data: { breadcrumb: '/探索景點/搜尋結果/詳細' },
       },
     ],
   },
