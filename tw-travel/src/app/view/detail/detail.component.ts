@@ -73,13 +73,7 @@ export class DetailComponent implements OnInit {
           this.name = name;
           this.theme = theme;
 
-          page === 'Activity'
-            ? (observable = this.dataService.getActivity({ theme }))
-            : page === 'Restaurant'
-            ? (observable = this.dataService.getRestaurant({ theme }))
-            : (observable = this.dataService.getScenicSpot({ theme }));
-
-          return observable;
+          return this.dataService.getData({ category: page, theme });
         }),
         switchMap((res) => {
           this.detailData = res
