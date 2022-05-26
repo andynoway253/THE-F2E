@@ -1,6 +1,6 @@
 import { Subscription, switchMap } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { BreadcrumbService } from './breadcrumb.service';
 
 @Component({
