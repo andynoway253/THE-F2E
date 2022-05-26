@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import {
   ACTIVITYLIST,
   RESTAURANTSLIST,
-  SCENICSPOT,
+  SCENICSPOTLIST,
 } from 'src/app/shared/model/data.model';
 import { PageEvent } from '@angular/material/paginator';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from 'src/app/shared/service/data.service';
 
 @Component({
@@ -16,6 +16,8 @@ import { DataService } from 'src/app/shared/service/data.service';
 export class ResultComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
+
+    private router: Router,
 
     private dataService: DataService
   ) {
@@ -28,11 +30,11 @@ export class ResultComponent implements OnInit {
 
   themeList: Array<{ label: string; value: any; src: string }> = []; // 分類列表
 
-  currentCategory: string | undefined = '';
+  currentCategory: string = '';
 
-  currentTheme: string | undefined = '';
+  currentTheme: string = '';
 
-  currentCity: string | undefined = '';
+  currentCity: string = '';
 
   pageSize = 10;
 
@@ -47,7 +49,7 @@ export class ResultComponent implements OnInit {
         break;
 
       case 'ScenicSpot':
-        this.themeList = SCENICSPOT;
+        this.themeList = SCENICSPOTLIST;
         break;
 
       case 'Restaurant':
@@ -69,40 +71,26 @@ export class ResultComponent implements OnInit {
 
     let observable: any;
 
-    switch (this.currentCategory) {
-      case 'Activity':
-        observable = selectCity
-          ? this.dataService.getDataByCity({
-              category: 'Activity',
-              city: selectCity,
-              theme: selectTheme,
-            })
-          : this.dataService.getActivity({ theme: selectTheme });
-        break;
+    const dataByCity = {
+      category: this.currentCategory,
+      city: selectCity || '',
+      theme:
+        this.currentCategory === 'ScenicSpot' && selectTheme
+          ? selectTheme + '類'
+          : selectTheme,
+    };
 
-      case 'ScenicSpot':
-        observable = selectCity
-          ? this.dataService.getDataByCity({
-              category: 'ScenicSpot',
-              city: selectCity,
-              theme: selectTheme + '類',
-            })
-          : this.dataService.getScenicSpot({ theme: selectTheme + '類' });
-        break;
+    const data = {
+      category: this.currentCategory,
+      theme:
+        this.currentCategory === 'ScenicSpot'
+          ? selectTheme + '類'
+          : selectTheme || '',
+    };
 
-      case 'Restaurant':
-        observable = selectCity
-          ? this.dataService.getDataByCity({
-              category: 'Restaurant',
-              city: selectCity,
-              theme: selectTheme,
-            })
-          : this.dataService.getRestaurant({ theme: selectTheme });
-        break;
-
-      default:
-        break;
-    }
+    observable = selectCity
+      ? this.dataService.getDataByCity(dataByCity)
+      : this.dataService.getData(data);
 
     observable.subscribe({
       next: (res: any) => {
@@ -110,12 +98,7 @@ export class ResultComponent implements OnInit {
           .map((item: any, idx: number) => {
             return {
               id: idx,
-              name:
-                this.currentCategory === 'Activity'
-                  ? item.ActivityName
-                  : this.currentCategory === 'Restaurant'
-                  ? item.RestaurantName
-                  : item.ScenicSpotName,
+              name: item[`${this.currentCategory}Name`],
               class: item.Class ? item.Class : item.Class1,
               ...item,
             };
@@ -125,12 +108,7 @@ export class ResultComponent implements OnInit {
         this.tempData = res.map((item: any, idx: number) => {
           return {
             id: idx,
-            name:
-              this.currentCategory === 'Activity'
-                ? item.ActivityName
-                : this.currentCategory === 'Restaurant'
-                ? item.RestaurantName
-                : item.ScenicSpotName,
+            name: item[`${this.currentCategory}Name`],
             class: item.Class ? item.Class : item.Class1,
             ...item,
           };
@@ -147,5 +125,7 @@ export class ResultComponent implements OnInit {
     );
   }
 
-  backTheme() {}
+  backTheme() {
+    this.router.navigate([`${this.currentCategory}`]);
+  }
 }
