@@ -49,7 +49,7 @@ export const RESTAURANTSLIST = [
   { label: '其他', value: '其他', src: '' },
 ];
 
-export const SCENICSPOT = [
+export const SCENICSPOTLIST = [
   { label: '--', value: null, src: '' },
   { label: '觀光工廠', value: '觀光工廠', src: '' },
   { label: '文化', value: '文化', src: '' },

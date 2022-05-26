@@ -1,7 +1,7 @@
 import {
   ACTIVITYLIST,
   RESTAURANTSLIST,
-  SCENICSPOT,
+  SCENICSPOTLIST,
 } from './../../model/data.model';
 import { AlertMessageService } from './../alert-message/alert-message.service';
 import { Component, Input, Output } from '@angular/core';
@@ -39,7 +39,7 @@ export class SearchBarComponent {
     this.page === 'Activity'
       ? (this.themeList = ACTIVITYLIST)
       : this.page === 'ScenicSpot'
-      ? (this.themeList = SCENICSPOT)
+      ? (this.themeList = SCENICSPOTLIST)
       : (this.themeList = RESTAURANTSLIST);
   }
 

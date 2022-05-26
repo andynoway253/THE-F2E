@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import {
   ACTIVITYLIST,
   RESTAURANTSLIST,
-  SCENICSPOT,
+  SCENICSPOTLIST,
 } from 'src/app/shared/model/data.model';
 import { NavigationEnd, Router } from '@angular/router';
 
@@ -27,9 +27,9 @@ export class ThemeComponent implements OnInit {
 
   themeList: Array<{ label: string; value: any; src: string }> = []; // 分類列表
 
-  currentCategory: string | undefined = '';
+  currentCategory: string = '';
 
-  currentTheme: string | undefined = '';
+  currentTheme: string = '';
 
   ngOnInit(): void {
     switch (this.currentCategory) {
@@ -38,7 +38,7 @@ export class ThemeComponent implements OnInit {
         break;
 
       case 'ScenicSpot':
-        this.themeList = SCENICSPOT;
+        this.themeList = SCENICSPOTLIST;
         break;
 
       case 'Restaurant':
