@@ -2,10 +2,10 @@ import {
   ACTIVITYLIST,
   RESTAURANTSLIST,
   SCENICSPOTLIST,
+  CITYLIST,
 } from './../../model/data.model';
 import { AlertMessageService } from './../alert-message/alert-message.service';
 import { Component, Input, Output } from '@angular/core';
-import { CITYLIST } from '../../model/data.model';
 import { EventEmitter } from '@angular/core';
 
 @Component({
@@ -16,13 +16,30 @@ import { EventEmitter } from '@angular/core';
 export class SearchBarComponent {
   constructor(private alertMessageService: AlertMessageService) {}
 
-  @Input() page: string | undefined = '';
+  @Input() layout = 'row';
+
+  @Input() hiddenCategory = false;
+
+  @Input() hiddenCity = false;
+
+  @Input() hiddenTheme = false;
+
+  @Input() hiddenKeyWord = false;
+
+  @Input() set category(value: any) {
+    this.selectCategory = value;
+  }
+
+  @Input() set city(value: any) {
+    this.selectCity = value;
+  }
 
   @Input() set theme(value: any) {
     this.selectTheme = value;
   }
 
   @Output() executeSearch = new EventEmitter<{
+    selectCategory: string;
     selectCity: string;
     selectTheme: string;
   }>();
@@ -31,20 +48,39 @@ export class SearchBarComponent {
 
   themeList: Array<{ label: string; value: string | null; src: string }>;
 
+  categoryList = [
+    { label: '探索景點', value: 'ScenicSpot' },
+    { label: '節慶活動', value: 'Activity' },
+    { label: '品嚐美食', value: 'Restaurant' },
+  ];
+
+  selectCategory = '';
+
   selectCity = '';
 
   selectTheme = '';
 
   ngOnInit() {
-    this.page === 'Activity'
+    this.selectCategory === 'Activity'
       ? (this.themeList = ACTIVITYLIST)
-      : this.page === 'ScenicSpot'
+      : this.selectCategory === 'ScenicSpot'
       ? (this.themeList = SCENICSPOTLIST)
       : (this.themeList = RESTAURANTSLIST);
   }
 
-  search(params: { selectCity: string; selectTheme: string }) {
-    if (!params.selectCity && !params.selectTheme) {
+  search(params: {
+    selectCategory: string;
+    selectCity: string;
+    selectTheme: string;
+  }) {
+    const { selectCategory, selectCity, selectTheme } = params;
+
+    if (!selectCategory) {
+      this.alertMessageService.showInfo('請先選擇類別！');
+      return;
+    }
+
+    if (!selectCity && !selectTheme) {
       this.alertMessageService.showInfo('請先選擇城市或主題！');
       return;
     }

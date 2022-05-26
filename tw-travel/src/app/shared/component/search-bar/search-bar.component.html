@@ -1,5 +1,21 @@
-<div class="search" fxFlex fxLayout="row" fxLayoutGap="8px">
-  <mat-form-field fxFlex="0 0 auto" appearance="outline">
+<div class="search" fxFlex [fxLayout]="layout" fxLayoutGap="8px">
+  <mat-form-field
+    fxFlex="0 0 auto"
+    appearance="outline"
+    [style]="hiddenCategory ? 'display:none' : ''"
+  >
+    <mat-select [(ngModel)]="selectCategory" placeholder="請選擇類別">
+      <mat-option *ngFor="let item of categoryList" [value]="item.value">
+        {{ item.label }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field
+    fxFlex="0 0 auto"
+    appearance="outline"
+    [style]="hiddenCity ? 'display:none' : ''"
+  >
     <mat-select [(ngModel)]="selectCity" placeholder="請選擇城市">
       <mat-option *ngFor="let item of cityList" [value]="item.value">
         {{ item.label }}
@@ -7,7 +23,11 @@
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field fxFlex="0 0 auto" appearance="outline">
+  <mat-form-field
+    fxFlex="0 0 auto"
+    appearance="outline"
+    [style]="hiddenTheme ? 'display:none' : ''"
+  >
     <mat-select [(ngModel)]="selectTheme" placeholder="請選擇主題">
       <mat-option *ngFor="let item of themeList" [value]="item.value">
         {{ item.label }}
@@ -15,13 +35,17 @@
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field fxFlex="3 0 auto" appearance="outline">
+  <mat-form-field
+    fxFlex="3 0 auto"
+    appearance="outline"
+    [style]="hiddenKeyWord ? 'display:none' : ''"
+  >
     <input
       matInput
       [placeholder]="
-        page === 'Activity'
+        category === 'Activity'
           ? '想找有趣的？請輸入關鍵字'
-          : page === 'ScenicSpot'
+          : category === 'ScenicSpot'
           ? '你想去哪裡？請輸入關鍵字'
           : '你想吃甚麼？請輸入關鍵字'
       "
@@ -34,7 +58,7 @@
       fxFlex
       mat-raised-button
       color="primary"
-      (click)="search({selectCity, selectTheme})"
+      (click)="search({selectCategory, selectCity, selectTheme})"
     >
       <mat-icon>search</mat-icon>
       搜　　尋
