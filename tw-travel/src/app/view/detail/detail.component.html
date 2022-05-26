@@ -20,19 +20,19 @@
     </div>
 
     <div class="introduce">
-      <div *ngIf="page === 'Activity'">
+      <div *ngIf="category === 'Activity'">
         <p>活動介紹：</p>
 
         {{ detailData?.Description }} {{ detailData?.DescriptionDetail }}
       </div>
 
-      <div *ngIf="page === 'Restaurant'">
+      <div *ngIf="category === 'Restaurant'">
         <p>餐廳介紹：</p>
 
         {{ detailData?.Description }}
       </div>
 
-      <div *ngIf="page === 'ScenicSpot'">
+      <div *ngIf="category === 'ScenicSpot'">
         <p>景點介紹：</p>
         <p>{{ detailData?.Description }}</p>
         <p>{{ detailData?.DescriptionDetail }}</p>
@@ -41,7 +41,7 @@
 
     <div fxLayout="row" fxLayoutGap="16px">
       <div
-        *ngIf="page === 'Activity'"
+        *ngIf="category === 'Activity'"
         class="info"
         fxLayout="column"
         fxLayoutGap="12px"
@@ -76,7 +76,7 @@
       </div>
 
       <div
-        *ngIf="page === 'Restaurant'"
+        *ngIf="category === 'Restaurant'"
         class="info"
         fxLayout="column"
         fxLayoutGap="12px"
@@ -103,7 +103,7 @@
       </div>
 
       <div
-        *ngIf="page === 'ScenicSpot'"
+        *ngIf="category === 'ScenicSpot'"
         class="info"
         fxLayout="column"
         fxLayoutGap="12px"
@@ -164,9 +164,9 @@
       <div fxLayout="row" fxLayoutAlign="space-between baseline">
         <span class="theme">
           {{
-            page === "Activity"
+            category === "Activity"
               ? "還有這些不能錯過的活動"
-              : page === "Restaurant"
+              : category === "Restaurant"
               ? "還有這些不能錯過的餐廳"
               : "還有這些不能錯過的景點"
           }}
@@ -199,8 +199,8 @@
               fxLayoutGap="12px"
               fxLayoutAlign="center"
             >
-              <p class="name" [title]="item[page + 'Name']">
-                {{ item[page + "Name"] }}
+              <p class="name" [title]="item[category + 'Name']">
+                {{ item[category + "Name"] }}
               </p>
               <div fxLayout="row" fxLayoutAlign="space-between">
                 <div class="location" fxLayout="row" fxLayoutGap="8px">

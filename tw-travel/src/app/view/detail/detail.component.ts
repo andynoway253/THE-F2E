@@ -51,11 +51,7 @@ export class DetailComponent implements OnInit {
 
   markerPositions: google.maps.LatLngLiteral[] = [];
 
-  name: string;
-
-  page: string;
-
-  theme: string;
+  category: string;
 
   detailData: any;
 
@@ -64,23 +60,24 @@ export class DetailComponent implements OnInit {
   slides: Array<{ image: string; alt: string }> = [];
 
   ngOnInit(): void {
-    let observable: Observable<Array<any>>;
     this.route.queryParamMap
       .pipe(
         switchMap((queryParams: any) => {
-          const { page, name, theme } = queryParams.params;
-          this.page = page;
-          this.name = name;
-          this.theme = theme;
+          const { category, name, theme } = queryParams.params;
+          this.category = category;
 
-          return this.dataService.getData({ category: page, theme });
+          return this.dataService
+            .getData({ category, theme })
+            .pipe(map((res) => ({ data: res, category, name, theme })));
         }),
         switchMap((res) => {
-          this.detailData = res
-            .filter((item) => item[`${this.page}Name`] === this.name)
+          const { data, category, name, theme } = res;
+
+          this.detailData = data
+            .filter((item) => item[`${category}Name`] === name)
             .map((item) => ({
               ...item,
-              Name: item[`${this.page}Name`],
+              Name: item[`${category}Name`],
             }))[0];
 
           const { Address, City, Position, Picture } = this.detailData;
@@ -123,25 +120,11 @@ export class DetailComponent implements OnInit {
           });
 
           if (cityEng) {
-            this.page === 'Activity'
-              ? (observable = this.dataService.getDataByCity({
-                  category: this.page,
-                  city: cityEng,
-                  theme: this.theme,
-                }))
-              : this.page === 'Restaurant'
-              ? (observable = this.dataService.getDataByCity({
-                  category: this.page,
-                  city: cityEng,
-                  theme: this.theme,
-                }))
-              : (observable = this.dataService.getDataByCity({
-                  category: this.page,
-                  city: cityEng,
-                  theme: this.theme,
-                }));
-
-            return observable;
+            return this.dataService.getDataByCity({
+              category: category,
+              city: cityEng,
+              theme: theme,
+            });
           }
 
           return throwError(() => new Error());
@@ -151,7 +134,12 @@ export class DetailComponent implements OnInit {
         next: (res) => {
           this.getRandomData(res);
         },
-        error: () => {
+        error: (msg) => {
+          if (msg.error.message) {
+            this.alertMessageService.showError(msg.error.message);
+            return;
+          }
+
           this.alertMessageService.showError('公開資料缺少資料');
         },
       });
