@@ -1,3 +1,4 @@
+import { SearchBarService } from './../../shared/component/search-bar/search-bar.service';
 import { BreadcrumbService } from './../../shared/component/breadcrumb/breadcrumb.service';
 import { Component, OnInit } from '@angular/core';
 import {
@@ -16,7 +17,7 @@ export class ThemeComponent implements OnInit {
   constructor(
     private router: Router,
 
-    private breadcrumbService: BreadcrumbService
+    private searchBarService: SearchBarService
   ) {
     this.router.events.subscribe((event: any) => {
       if (event instanceof NavigationEnd) {
@@ -51,22 +52,9 @@ export class ThemeComponent implements OnInit {
   }
 
   search(params: { selectCity?: string; selectTheme?: string }) {
-    const { selectCity, selectTheme } = params;
-
-    this.router.navigate([`${this.currentCategory}`, 'Result'], {
-      queryParams: {
-        category: this.currentCategory,
-        city: selectCity,
-        theme: selectTheme,
-      },
-    });
-
-    this.breadcrumbService.setResultParams.next({
-      queryParams: {
-        category: this.currentCategory,
-        city: selectCity,
-        theme: selectTheme,
-      },
+    this.searchBarService.search({
+      ...params,
+      selectCategory: this.currentCategory,
     });
   }
 }

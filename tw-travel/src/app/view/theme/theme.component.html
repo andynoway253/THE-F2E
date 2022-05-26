@@ -10,8 +10,9 @@
 
   <div class="search" fxFlex fxLayout="row" fxLayoutGap="8px">
     <app-search-bar
-      [page]="currentCategory"
+      [category]="currentCategory"
       [theme]="currentTheme"
+      [hiddenCategory]="true"
       (executeSearch)="search($event)"
     ></app-search-bar>
   </div>
