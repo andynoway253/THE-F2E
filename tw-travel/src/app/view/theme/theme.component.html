@@ -28,10 +28,11 @@
       <ng-container *ngFor="let item of themeList">
         <ng-container *ngIf="item.value">
           <div class="card" (click)="search({ selectTheme: item.label })">
-            <div class="title">
-              {{ item.label }}
-            </div>
-            <img src="https://fakeimg.pl/255x124/?text=Hello" />
+            <img
+              [src]="
+                'https://fakeimg.pl/255x124/?text=' + item.label + '&font=noto'
+              "
+            />
           </div>
         </ng-container>
       </ng-container>
