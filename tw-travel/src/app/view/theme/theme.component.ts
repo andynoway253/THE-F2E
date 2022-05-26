@@ -25,7 +25,7 @@ export class ThemeComponent implements OnInit {
     });
   }
 
-  themeList: Array<{ label: string; value: any; src: string }> = []; // 分類列表
+  themeList: Array<{ label: string; value: string | null; src: string }> = []; // 分類列表
 
   currentCategory: string = '';
 

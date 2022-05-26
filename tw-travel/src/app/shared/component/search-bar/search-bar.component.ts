@@ -29,7 +29,7 @@ export class SearchBarComponent {
 
   cityList = CITYLIST;
 
-  themeList: any;
+  themeList: Array<{ label: string; value: string | null; src: string }>;
 
   selectCity = '';
 
