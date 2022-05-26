@@ -10,8 +10,10 @@
 
   <div class="search" fxFlex fxLayout="row" fxLayoutGap="8px">
     <app-search-bar
-      [page]="currentCategory"
+      [category]="currentCategory"
       [theme]="currentTheme"
+      [city]="currentCity"
+      [hiddenCategory]="true"
       (executeSearch)="search($event)"
     ></app-search-bar>
   </div>
@@ -36,7 +38,7 @@
           fxLayout="row"
           [routerLink]="'./Detail/'"
           [queryParams]="{
-            page: currentCategory,
+            category: currentCategory,
             name: item.name,
             theme: item.class
           }"
