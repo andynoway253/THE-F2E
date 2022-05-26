@@ -8,7 +8,7 @@
     class="first"
     fxLayout="row"
     fxLayoutGap="20px"
-    fxLayoutAlign="start baseline"
+    fxLayoutAlign="start center"
   >
     <div fxFlex="570px" fxLayout="column" fxLayoutGap="28px">
       <div class="title" fxLayout="column" fxLayoutGap="28px">
@@ -36,22 +36,11 @@
     </div>
 
     <div fxFlex="350px" fxLayout="column" fxLayoutGap="4px">
-      <mat-form-field appearance="outline">
-        <mat-select [(ngModel)]="defaultSelectItem">
-          <mat-option *ngFor="let item of itemList" [value]="item">
-            {{ item }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <mat-form-field class="example-full-width" appearance="outline">
-        <input matInput placeholder="你想去哪裡？請輸入關鍵字" value="" />
-      </mat-form-field>
-
-      <button mat-raised-button color="primary">
-        <mat-icon>search</mat-icon>
-        搜　　尋
-      </button>
+      <app-search-bar
+        [layout]="'column'"
+        [hiddenKeyWord]="true"
+        (executeSearch)="search($event)"
+      ></app-search-bar>
     </div>
   </div>
 

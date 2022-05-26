@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { forkJoin } from 'rxjs';
+import { SearchBarService } from 'src/app/shared/component/search-bar/search-bar.service';
 import { DataService } from '../../shared/service/data.service';
 
 @Component({
@@ -8,13 +9,13 @@ import { DataService } from '../../shared/service/data.service';
   styleUrls: ['./index.component.scss'],
 })
 export class IndexComponent implements OnInit {
-  constructor(private dataService: DataService) {}
+  constructor(
+    private dataService: DataService,
+
+    private searchBarService: SearchBarService
+  ) {}
 
   @ViewChild('newSwiper') newSwiper: any;
-
-  itemList = ['探索景點', '節慶活動', '品嚐美食'];
-
-  defaultSelectItem = '探索景點';
 
   scenicSpot: any = [];
 
@@ -36,5 +37,13 @@ export class IndexComponent implements OnInit {
         this.activity = activity;
       },
     });
+  }
+
+  search(params: {
+    selectCategory: string;
+    selectCity?: string;
+    selectTheme?: string;
+  }) {
+    this.searchBarService.search(params);
   }
 }
