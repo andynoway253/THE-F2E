@@ -15,25 +15,11 @@ export class DataService extends BaseApi {
     return this.get(`${params.category}?%24top=4`);
   }
 
-  getScenicSpot(params: { theme: any }): Observable<Array<any>> {
-    return this.get(`ScenicSpot?$filter=Class1 eq '${params.theme}'`);
+  getData(params: { category: string; theme: string }): Observable<Array<any>> {
+    return this.get(`${params.category}?$filter=Class1 eq '${params.theme}'`);
   }
 
-  getRestaurant(params: { theme: any }): Observable<Array<any>> {
-    return this.get(`Restaurant?$filter=Class eq '${params.theme}'`);
-  }
-
-  getActivity(params: { theme: any }): Observable<Array<any>> {
-    return this.get(`Activity?$filter=Class1 eq '${params.theme}'`);
-  }
-
-  // getData(params: { category: string; theme: string }) {
-  //   const { category, theme } = params;
-
-  //   return this.get(`${category}?$filter=Class1 eq '${theme}'`);
-  // }
-
-  getDataByCity(params: { category: string; city: any; theme?: any | null }) {
+  getDataByCity(params: { category: string; city: string; theme?: string }) {
     const { category, city, theme } = params;
 
     if (theme) {
