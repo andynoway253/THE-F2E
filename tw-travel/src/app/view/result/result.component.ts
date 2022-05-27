@@ -1,12 +1,14 @@
+import { BehaviorSubject } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   ACTIVITYLIST,
   RESTAURANTSLIST,
   SCENICSPOTLIST,
 } from 'src/app/shared/model/data.model';
-import { PageEvent } from '@angular/material/paginator';
-import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from 'src/app/shared/service/data.service';
+import { BreadcrumbService } from 'src/app/shared/component/breadcrumb/breadcrumb.service';
 
 @Component({
   selector: 'app-result',
@@ -18,6 +20,8 @@ export class ResultComponent implements OnInit {
     private route: ActivatedRoute,
 
     private router: Router,
+
+    private breadcrumbService: BreadcrumbService,
 
     private dataService: DataService
   ) {
@@ -37,6 +41,8 @@ export class ResultComponent implements OnInit {
   currentCity: string = '';
 
   pageSize = 10;
+
+  data$ = new BehaviorSubject(null);
 
   data: any = [];
 
@@ -112,6 +118,25 @@ export class ResultComponent implements OnInit {
             class: item.Class ? item.Class : item.Class1,
             ...item,
           };
+        });
+
+        this.data$.next(this.data);
+
+        this.router.navigate(['.'], {
+          relativeTo: this.route,
+          queryParams: {
+            category: this.currentCategory,
+            city: selectCity,
+            theme: selectTheme,
+          },
+        });
+
+        this.breadcrumbService.setResultParams.next({
+          queryParams: {
+            category: this.currentCategory,
+            city: selectCity,
+            theme: selectTheme,
+          },
         });
       },
     });

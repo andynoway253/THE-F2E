@@ -31,49 +31,65 @@
       fxLayoutGap="8px grid"
       fxLayoutAlign="space-between"
     >
-      <ng-container *ngFor="let item of data">
-        <div
-          class="card"
-          fxFlex="49"
-          fxLayout="row"
-          [routerLink]="'./Detail/'"
-          [queryParams]="{
-            category: currentCategory,
-            name: item.name,
-            theme: item.class
-          }"
-        >
-          <div class="img">
-            <img
-              [src]="
-                item.Picture.PictureUrl1
-                  ? item.Picture.PictureUrl1
-                  : 'https://fakeimg.pl/160x160/'
-              "
-            />
-          </div>
-          <div
-            class="content"
-            fxFlex
-            fxLayout="column"
-            fxLayoutGap="12px"
-            fxLayoutAlign="center"
-          >
-            <p class="name">
-              {{ item.name }}
-            </p>
-
-            <div class="location" fxLayout="row" fxLayoutGap="8px">
-              <img
-                style="width: 13px; height: 16px"
-                src="../../assets/img/Vector-2.png"
-              />
-              <span> {{ item.Address }} </span>
-            </div>
-
-            <p class="detail">詳細介紹</p>
-          </div>
+      <ng-template #loading>
+        <div fxFlex fxLayoutAlign="center center">
+          <mat-spinner></mat-spinner>
         </div>
+      </ng-template>
+
+      <ng-template #noData>
+        <div fxFlex fxLayoutAlign="center center">
+          <img src="../../assets/img/notFound.png" />
+        </div>
+      </ng-template>
+
+      <ng-container *ngIf="data$ | async; else loading">
+        <ng-container *ngIf="data.length; else noData">
+          <ng-container *ngFor="let item of data">
+            <div
+              class="card"
+              fxFlex="49"
+              fxLayout="row"
+              [routerLink]="'./Detail/'"
+              [queryParams]="{
+                category: currentCategory,
+                name: item.name,
+                theme: item.class
+              }"
+            >
+              <div class="img">
+                <img
+                  [src]="
+                    item.Picture.PictureUrl1
+                      ? item.Picture.PictureUrl1
+                      : 'https://fakeimg.pl/160x160/?text=缺少圖片&font=noto'
+                  "
+                />
+              </div>
+              <div
+                class="content"
+                fxFlex
+                fxLayout="column"
+                fxLayoutGap="12px"
+                fxLayoutAlign="center"
+              >
+                <p class="name">
+                  {{ item.name }}
+                </p>
+
+                <div class="location" fxLayout="row" fxLayoutGap="8px">
+                  <img
+                    style="width: 13px; height: 16px"
+                    src="../../assets/img/Vector-2.png"
+                  />
+                  <span> {{ item.Address }} </span>
+                </div>
+
+                <p class="detail">詳細介紹</p>
+              </div>
+            </div>
+          </ng-container>
+        </ng-container>
       </ng-container>
     </div>
 
