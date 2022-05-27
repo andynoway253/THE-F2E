@@ -3,15 +3,7 @@ import { CITYLIST } from './../../shared/model/data.model';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import {
-  catchError,
-  forkJoin,
-  map,
-  Observable,
-  of,
-  switchMap,
-  throwError,
-} from 'rxjs';
+import { catchError, map, Observable, of, switchMap, throwError } from 'rxjs';
 import { DataService } from 'src/app/shared/service/data.service';
 import { MapInfoWindow, MapMarker } from '@angular/google-maps';
 
@@ -51,9 +43,9 @@ export class DetailComponent implements OnInit {
 
   markerPositions: google.maps.LatLngLiteral[] = [];
 
-  category: string;
-
   detailData: any;
+
+  category = '';
 
   more: Array<any> = [];
 

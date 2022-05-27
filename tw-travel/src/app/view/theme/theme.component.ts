@@ -1,5 +1,4 @@
 import { SearchBarService } from './../../shared/component/search-bar/search-bar.service';
-import { BreadcrumbService } from './../../shared/component/breadcrumb/breadcrumb.service';
 import { Component, OnInit } from '@angular/core';
 import {
   ACTIVITYLIST,
@@ -28,9 +27,9 @@ export class ThemeComponent implements OnInit {
 
   themeList: Array<{ label: string; value: string | null; src: string }> = []; // 分類列表
 
-  currentCategory: string = '';
+  currentCategory = '';
 
-  currentTheme: string = '';
+  currentTheme = '';
 
   ngOnInit(): void {
     switch (this.currentCategory) {
@@ -44,9 +43,6 @@ export class ThemeComponent implements OnInit {
 
       case 'Restaurant':
         this.themeList = RESTAURANTSLIST;
-        break;
-
-      default:
         break;
     }
   }

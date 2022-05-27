@@ -21,9 +21,9 @@ export class IndexComponent implements OnInit {
 
   restaurant: any = [];
 
-  hotel: any = [];
-
   activity: any = [];
+
+  // hotel: any = [];
 
   ngOnInit(): void {
     forkJoin(
