@@ -16,7 +16,11 @@ export class DataService extends BaseApi {
   }
 
   getData(params: { category: string; theme: string }): Observable<Array<any>> {
-    return this.get(`${params.category}?$filter=Class1 eq '${params.theme}'`);
+    return this.get(
+      `${params.category}?$filter=${
+        params.category === 'Restaurant' ? 'Class' : 'Class1'
+      } eq '${params.theme}'`
+    );
   }
 
   getDataByCity(params: { category: string; city: string; theme?: string }) {
@@ -24,7 +28,11 @@ export class DataService extends BaseApi {
 
     if (theme) {
       return this.get(
-        `${category}/` + `${city}?$filter=Class1 eq ` + `'${theme}'`
+        `${category}/` +
+          `${city}?$filter=${
+            params.category === 'Restaurant' ? 'Class' : 'Class1'
+          } eq ` +
+          `'${theme}'`
       );
     } else {
       return this.get(`${category}/` + `${city}`);
