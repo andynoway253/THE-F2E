@@ -67,7 +67,7 @@
             fxFlex="49"
             fxLayout="row"
             fxLayoutGap="4px"
-            routerLink="/Activity/Detail"
+            routerLink="/Activity/Result/Detail"
             [queryParams]="{
               page: 'Activity',
               name: item.ActivityName,
@@ -83,7 +83,7 @@
                     ? item.Picture.PictureUrl2
                     : item.Picture.PictureUrl3
                     ? item.Picture.PictureUrl3
-                    : 'https://fakeimg.pl/255x200/'
+                    : 'https://fakeimg.pl/255x200/?text=缺少圖片&font=noto'
                 "
               />
             </div>
@@ -135,7 +135,7 @@
             fxFlex="25"
             fxLayout="column"
             fxLayoutGap="12px"
-            routerLink="/ScenicSpot/Detail"
+            routerLink="/ScenicSpot/Result/Detail"
             [queryParams]="{
               page: 'ScenicSpot',
               name: item.ScenicSpotName,
@@ -151,7 +151,7 @@
                     ? item.Picture.PictureUrl2
                     : item.Picture.PictureUrl3
                     ? item.Picture.PictureUrl3
-                    : 'https://fakeimg.pl/255x200/'
+                    : 'https://fakeimg.pl/255x200/?text=缺少圖片&font=noto'
                 "
               />
             </div>
@@ -197,7 +197,7 @@
             fxFlex="25"
             fxLayout="column"
             fxLayoutGap="12px"
-            routerLink="/Restaurant/Detail"
+            routerLink="/Restaurant/Result/Detail"
             [queryParams]="{
               page: 'Restaurant',
               name: item.RestaurantName,
@@ -213,7 +213,7 @@
                     ? item.Picture.PictureUrl2
                     : item.Picture.PictureUrl3
                     ? item.Picture.PictureUrl3
-                    : 'https://fakeimg.pl/255x200/'
+                    : 'https://fakeimg.pl/255x200/?text=缺少圖片&font=noto'
                 "
               />
             </div>
