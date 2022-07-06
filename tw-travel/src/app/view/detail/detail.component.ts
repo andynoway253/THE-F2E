@@ -59,20 +59,19 @@ export class DetailComponent implements OnInit {
           this.category = category;
 
           return this.dataService
-            .getData({ category, theme })
+            .getDataByName({ category, name })
             .pipe(map((res) => ({ data: res, category, name, theme })));
         }),
         switchMap((res) => {
-          const { data, category, name, theme } = res;
+          const { data, category, theme } = res;
 
-          this.detailData = data
-            .filter((item) => item[`${category}Name`] === name)
-            .map((item) => ({
-              ...item,
-              Name: item[`${category}Name`],
-            }))[0];
+          this.detailData = data.map((item) => ({
+            ...item,
+            Name: item[`${category}Name`],
+          }))[0];
 
           const { Address, City, Position, Picture } = this.detailData;
+
           const cityEng = City
             ? CITYLIST.filter((item) => item.label === City)[0].value
             : Address

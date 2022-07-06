@@ -12,6 +12,7 @@ export class DataService extends BaseApi {
   }
 
   getDataAll(params: { category: string }): Observable<Array<any>> {
+    //  目前想不到怎麼隨機取號
     return this.get(`${params.category}?%24top=4`);
   }
 
@@ -20,6 +21,17 @@ export class DataService extends BaseApi {
       `${params.category}?$filter=${
         params.category === 'Restaurant' ? 'Class' : 'Class1'
       } eq '${params.theme}'`
+    );
+  }
+
+  getDataByName(params: {
+    category: string;
+    name: string;
+  }): Observable<Array<any>> {
+    return this.get(
+      `${params.category}?$filter=${params.category + 'Name'} eq '${
+        params.name
+      }'`
     );
   }
 
