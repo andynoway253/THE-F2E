@@ -12,7 +12,7 @@ export class BaseApi {
   //   return this.http.post<any>(url);
   // }
 
-  baseUrl = 'https://ptx.transportdata.tw/MOTC/v2/Tourism/';
+  baseUrl = '  https://tdx.transportdata.tw/api/basic/v2/Tourism/';
 
   get(url: string): Observable<any> {
     return this.http.get<any>(this.baseUrl + url);
