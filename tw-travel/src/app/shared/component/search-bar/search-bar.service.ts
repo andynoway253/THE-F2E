@@ -24,6 +24,7 @@ export class SearchBarService {
         category: selectCategory,
         city: selectCity,
         theme: selectTheme,
+        page: 0,
       },
     });
 
@@ -32,6 +33,7 @@ export class SearchBarService {
         category: selectCategory,
         city: selectCity,
         theme: selectTheme,
+        page: 0,
       },
     });
   }
