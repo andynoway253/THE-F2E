@@ -181,7 +181,19 @@
         fxLayoutAlign="space-between"
       >
         <ng-container *ngFor="let item of more">
-          <div class="card" fxFlex="25" fxLayout="column" fxLayoutGap="12px">
+          <div
+            class="card"
+            fxFlex="25"
+            fxLayout="column"
+            fxLayoutGap="12px"
+            [routerLink]="'./Detail/'"
+            [queryParams]="{
+              category: category,
+              name: item.name,
+              theme: item.class,
+              page: page
+            }"
+          >
             <div class="img">
               <img
                 [src]="
@@ -209,7 +221,7 @@
                     src="../../assets/img/Vector-2.png"
                   />
                   <span>
-                    {{ item?.City ? item?.City : item.Address.substr(0, 3) }}
+                    {{ item?.City ? item.City : item.Address.substr(0, 3) }}
                   </span>
                 </div>
               </div>
