@@ -69,7 +69,7 @@
             fxLayoutGap="4px"
             routerLink="/Activity/Result/Detail"
             [queryParams]="{
-              page: 'Activity',
+              category: 'Activity',
               name: item.ActivityName,
               theme: item.Class1 ? item.Class1 : '其他'
             }"
@@ -137,7 +137,7 @@
             fxLayoutGap="12px"
             routerLink="/ScenicSpot/Result/Detail"
             [queryParams]="{
-              page: 'ScenicSpot',
+              category: 'ScenicSpot',
               name: item.ScenicSpotName,
               theme: item.Class1 ? item.Class1 : '其他'
             }"
@@ -199,7 +199,7 @@
             fxLayoutGap="12px"
             routerLink="/Restaurant/Result/Detail"
             [queryParams]="{
-              page: 'Restaurant',
+              category: 'Restaurant',
               name: item.RestaurantName,
               theme: item.Class
             }"
