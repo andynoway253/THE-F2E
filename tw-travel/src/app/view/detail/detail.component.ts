@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { catchError, map, Observable, of, switchMap, throwError } from 'rxjs';
 import { DataService } from 'src/app/shared/service/data.service';
 import { MapInfoWindow, MapMarker } from '@angular/google-maps';
+import { BreadcrumbService } from 'src/app/shared/component/breadcrumb/breadcrumb.service';
 
 @Component({
   selector: 'app-detail',
@@ -17,6 +18,8 @@ export class DetailComponent implements OnInit {
     private httpClient: HttpClient,
 
     private route: ActivatedRoute,
+
+    private breadcrumbService: BreadcrumbService,
 
     private dataService: DataService,
 
@@ -47,6 +50,8 @@ export class DetailComponent implements OnInit {
 
   category = '';
 
+  page: any;
+
   more: Array<any> = [];
 
   slides: Array<{ image: string; alt: string }> = [];
@@ -55,8 +60,18 @@ export class DetailComponent implements OnInit {
     this.route.queryParamMap
       .pipe(
         switchMap((queryParams: any) => {
-          const { category, name, theme } = queryParams.params;
+          const { category, city, theme, name, page } = queryParams.params; // 當前分類
           this.category = category;
+          this.page = page;
+
+          this.breadcrumbService.setResultParams.next({
+            queryParams: {
+              category: category,
+              city: city,
+              theme: theme.replace('類', ''),
+              page: page,
+            },
+          });
 
           return this.dataService
             .getDataByName({ category, name })
