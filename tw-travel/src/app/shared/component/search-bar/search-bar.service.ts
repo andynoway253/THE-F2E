@@ -28,7 +28,7 @@ export class SearchBarService {
       },
     });
 
-    this.breadcrumbService.setResultParams.next({
+    this.breadcrumbService.setQueryParams.next({
       queryParams: {
         category: selectCategory,
         city: selectCity,

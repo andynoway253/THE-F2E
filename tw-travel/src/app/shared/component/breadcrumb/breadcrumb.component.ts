@@ -17,7 +17,7 @@ export class BreadcrumbComponent implements OnInit {
   resultParams: any;
 
   ngOnInit(): void {
-    this.breadSubscription = this.breadcrumbService.setResultParams
+    this.breadSubscription = this.breadcrumbService.setQueryParams
       .pipe(
         switchMap((res) => {
           this.resultParams = res;

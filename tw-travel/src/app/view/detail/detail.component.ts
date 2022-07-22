@@ -64,7 +64,7 @@ export class DetailComponent implements OnInit {
           this.category = category;
           this.page = page;
 
-          this.breadcrumbService.setResultParams.next({
+          this.breadcrumbService.setQueryParams.next({
             queryParams: {
               category: category,
               city: city,
