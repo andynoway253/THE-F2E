@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { BreadcrumbService } from './shared/component/breadcrumb/breadcrumb.service';
+import { ConfigService } from './shared/service/config.service';
 
 @Component({
   selector: 'app-root',
@@ -11,10 +12,15 @@ import { BreadcrumbService } from './shared/component/breadcrumb/breadcrumb.serv
 export class AppComponent implements OnInit, OnDestroy {
   constructor(
     private activatedRoute: ActivatedRoute,
+
     private router: Router,
 
-    private breadcrumbService: BreadcrumbService
-  ) {}
+    private breadcrumbService: BreadcrumbService,
+
+    private configService: ConfigService
+  ) {
+    console.log(this.configService.config);
+  }
 
   private _routerSubscription: Subscription = new Subscription();
 

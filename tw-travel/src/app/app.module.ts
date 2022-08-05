@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -10,6 +10,7 @@ import { MaterialModule } from './shared/module/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { ConfigService } from './shared/service/config.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,7 +28,15 @@ import { HttpClientModule } from '@angular/common/http';
     FlexLayoutModule,
     MaterialModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (configService: ConfigService) => () =>
+        configService.getToken(),
+      deps: [ConfigService],
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
