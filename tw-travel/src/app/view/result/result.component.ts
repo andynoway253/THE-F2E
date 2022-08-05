@@ -1,4 +1,4 @@
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, switchMap } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -8,7 +8,7 @@ import {
   SCENICSPOTLIST,
 } from 'src/app/shared/model/data.model';
 import { DataService } from 'src/app/shared/service/data.service';
-import { BreadcrumbService } from 'src/app/shared/component/breadcrumb/breadcrumb.service';
+import { SearchBarService } from 'src/app/shared/component/search-bar/search-bar.service';
 
 @Component({
   selector: 'app-result',
@@ -21,32 +21,82 @@ export class ResultComponent implements OnInit {
 
     private router: Router,
 
-    private breadcrumbService: BreadcrumbService,
+    private dataService: DataService,
 
-    private dataService: DataService
+    private searchBarService: SearchBarService
   ) {
-    this.route.queryParams.subscribe((params) => {
-      this.currentCategory = params['category'];
-      this.currentTheme = params['theme'];
-      this.currentCity = params['city'];
-    });
+    this.route.queryParams
+      .pipe(
+        switchMap((params: any) => {
+          this.currentCategory = params['category'];
+          this.currentTheme = params['theme'];
+          this.currentCity = params['city'];
+          this.currentPage = params['page'] || 0;
+
+          let observable: any;
+          const dataByCity = {
+            category: this.currentCategory,
+            city: this.currentCity || '',
+            theme:
+              this.currentCategory === 'ScenicSpot' && this.currentTheme
+                ? this.currentTheme + '類'
+                : this.currentTheme,
+          };
+          const data = {
+            category: this.currentCategory,
+            theme:
+              this.currentCategory === 'ScenicSpot'
+                ? this.currentTheme + '類'
+                : this.currentTheme || '',
+          };
+          observable = this.currentCity
+            ? this.dataService.getDataByCity(dataByCity)
+            : this.dataService.getData(data);
+
+          return observable;
+        })
+      )
+      .subscribe({
+        next: (res: any) => {
+          const data = res.map((item: any, idx: number) => {
+            return {
+              id: idx,
+              name: item[`${this.currentCategory}Name`],
+              class: item.Class
+                ? item.Class
+                : item.Class1
+                ? item.Class1
+                : item.Class2
+                ? item.Class2
+                : '其他類',
+              ...item,
+            };
+          });
+          this.data = data.slice(
+            0 + this.currentPage * 10,
+            10 + this.currentPage * 10
+          );
+          this.tempData = data;
+          this.data$.next(this.data);
+        },
+      });
   }
 
   themeList: Array<{ label: string; value: string | null; src: string }> = []; // 分類列表
 
-  currentCategory: string = '';
+  currentCategory = '';
 
-  currentTheme: string = '';
+  currentTheme = '';
 
-  currentCity: string = '';
+  currentCity = '';
 
-  pageSize = 10;
-
-  data$ = new BehaviorSubject(null);
+  currentPage = 0;
 
   data: any = [];
 
   tempData: any = [];
+
+  data$ = new BehaviorSubject(null);
 
   ngOnInit(): void {
     switch (this.currentCategory) {
@@ -65,89 +115,27 @@ export class ResultComponent implements OnInit {
       default:
         break;
     }
-
-    this.search({
-      selectCity: this.currentCity,
-      selectTheme: this.currentTheme,
-    });
   }
 
   search(params: { selectCity?: string; selectTheme?: string }) {
-    const { selectCity, selectTheme } = params;
-
-    let observable: any;
-
-    const dataByCity = {
-      category: this.currentCategory,
-      city: selectCity || '',
-      theme:
-        this.currentCategory === 'ScenicSpot' && selectTheme
-          ? selectTheme + '類'
-          : selectTheme,
-    };
-
-    const data = {
-      category: this.currentCategory,
-      theme:
-        this.currentCategory === 'ScenicSpot'
-          ? selectTheme + '類'
-          : selectTheme || '',
-    };
-
-    observable = selectCity
-      ? this.dataService.getDataByCity(dataByCity)
-      : this.dataService.getData(data);
-
-    observable.subscribe({
-      next: (res: any) => {
-        this.data = res
-          .map((item: any, idx: number) => {
-            return {
-              id: idx,
-              name: item[`${this.currentCategory}Name`],
-              class: item.Class ? item.Class : item.Class1,
-              ...item,
-            };
-          })
-          .slice(0, 10);
-
-        this.tempData = res.map((item: any, idx: number) => {
-          return {
-            id: idx,
-            name: item[`${this.currentCategory}Name`],
-            class: item.Class ? item.Class : item.Class1,
-            ...item,
-          };
-        });
-
-        this.data$.next(this.data);
-
-        this.router.navigate(['.'], {
-          relativeTo: this.route,
-          queryParams: {
-            category: this.currentCategory,
-            city: selectCity,
-            theme: selectTheme,
-          },
-        });
-
-        this.breadcrumbService.setResultParams.next({
-          queryParams: {
-            category: this.currentCategory,
-            city: selectCity,
-            theme: selectTheme,
-          },
-        });
-      },
+    this.searchBarService.search({
+      ...params,
+      selectCategory: this.currentCategory,
     });
   }
 
   pageChange(e: PageEvent) {
-    this.pageSize = e.pageSize;
-    this.data = this.tempData.slice(
-      0 + e.pageIndex * e.pageSize,
-      e.pageSize + e.pageIndex * e.pageSize
-    );
+    this.currentPage = e.pageIndex;
+
+    this.router.navigate(['.'], {
+      relativeTo: this.route,
+      queryParams: {
+        category: this.currentCategory,
+        city: this.currentCity,
+        theme: this.currentTheme,
+        page: this.currentPage,
+      },
+    });
   }
 
   backTheme() {

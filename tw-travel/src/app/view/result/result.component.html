@@ -54,7 +54,8 @@
               [queryParams]="{
                 category: currentCategory,
                 name: item.name,
-                theme: item.class
+                theme: item.class,
+                page: currentPage
               }"
             >
               <div class="img">
@@ -96,10 +97,9 @@
     <div fxFlex fxLayout="row" fxLayoutAlign="end center">
       <button mat-button (click)="backTheme()">返回</button>
       <mat-paginator
-        #paginator
         [length]="tempData.length"
-        [pageSize]="pageSize"
-        [pageSizeOptions]="[10, 20]"
+        [pageSize]="10"
+        [pageIndex]="currentPage"
         (page)="pageChange($event)"
         aria-label="Select page"
       >
