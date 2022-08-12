@@ -2,13 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BaseApi } from '../api/base.api';
+import { ConfigService } from './config.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataService extends BaseApi {
-  constructor(http: HttpClient) {
-    super(http);
+  constructor(http: HttpClient, configService: ConfigService) {
+    super(http, configService);
   }
 
   getDataAll(params: { category: string }): Observable<Array<any>> {
