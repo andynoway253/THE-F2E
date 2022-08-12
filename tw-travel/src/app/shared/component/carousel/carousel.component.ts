@@ -1,4 +1,3 @@
-import { ThisReceiver } from '@angular/compiler';
 import { Component, Input } from '@angular/core';
 import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
 
@@ -10,7 +9,13 @@ import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
 export class CarouselComponent {
   constructor() {}
 
-  @Input() slides: Array<{ image: string; alt: string }> = [];
+  @Input() set setImg(value: any) {
+    this.slides = value;
+  }
+
+  get img() {
+    return this.slides;
+  }
 
   config: SwiperConfigInterface = {
     direction: 'horizontal',
@@ -21,17 +26,24 @@ export class CarouselComponent {
     pagination: true,
   };
 
-  ngOnInit() {
-    this.slides = this.slides.length
-      ? this.slides
-      : [
-          { image: 'https://fakeimg.pl/1040x400/', alt: '' },
-          { image: 'https://fakeimg.pl/1040x400/', alt: '' },
-          { image: 'https://fakeimg.pl/1040x400/', alt: '' },
-        ];
-  }
+  slides: Array<{ image: string; alt: string }> = [];
 
-  ngAfterViewInit() {}
+  ngOnInit() {
+    this.slides = [
+      {
+        image: 'https://fakeimg.pl/1040x400/?text=缺少圖片&font=noto',
+        alt: '',
+      },
+      {
+        image: 'https://fakeimg.pl/1040x400/?text=缺少圖片&font=noto',
+        alt: '',
+      },
+      {
+        image: 'https://fakeimg.pl/1040x400/?text=缺少圖片&font=noto',
+        alt: '',
+      },
+    ];
+  }
 
   onSwiper(swiper: any) {
     console.log(swiper);

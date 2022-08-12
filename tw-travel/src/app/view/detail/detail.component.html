@@ -4,7 +4,7 @@
   </div>
 
   <div class="carousel">
-    <app-carousel [slides]="slides"></app-carousel>
+    <app-carousel [setImg]="slidesSubject$ | async"></app-carousel>
   </div>
 
   <div class="detailContent" fxLayout="column" fxLayoutGap="24px">
@@ -188,6 +188,7 @@
               theme: item.Class1,
               page: page
             }"
+            (click)="toTop()"
           >
             <div class="img">
               <img

@@ -3,7 +3,15 @@ import { CITYLIST } from './../../shared/model/data.model';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { catchError, map, Observable, of, switchMap, throwError } from 'rxjs';
+import {
+  catchError,
+  map,
+  Observable,
+  of,
+  switchMap,
+  throwError,
+  BehaviorSubject,
+} from 'rxjs';
 import { DataService } from 'src/app/shared/service/data.service';
 import { MapInfoWindow, MapMarker } from '@angular/google-maps';
 import { BreadcrumbService } from 'src/app/shared/component/breadcrumb/breadcrumb.service';
@@ -54,7 +62,9 @@ export class DetailComponent implements OnInit {
 
   more: Array<any> = [];
 
-  slides: Array<{ image: string; alt: string }> = [];
+  slidesSubject$ = new BehaviorSubject<Array<{ image: string; alt: string }>>(
+    []
+  );
 
   ngOnInit(): void {
     this.route.queryParamMap
@@ -79,7 +89,7 @@ export class DetailComponent implements OnInit {
         }),
         switchMap((res) => {
           const { data, category, theme } = res;
-
+          const slides = [];
           this.detailData = data.map((item) => ({
             ...item,
             Name: item[`${category}Name`],
@@ -87,6 +97,7 @@ export class DetailComponent implements OnInit {
 
           const { Address, City, Position, Picture } = this.detailData;
 
+          //  有些資料沒有 city屬性
           const cityEng = City
             ? CITYLIST.filter((item) => item.label === City)[0].value
             : Address
@@ -95,24 +106,28 @@ export class DetailComponent implements OnInit {
             : null;
 
           if (Picture.PictureUrl1) {
-            this.slides.push({
+            slides.push({
               image: Picture.PictureUrl1,
               alt: Picture.PictureDescription1,
             });
           }
 
           if (Picture.PictureUrl2) {
-            this.slides.push({
+            slides.push({
               image: Picture.PictureUrl2,
               alt: Picture.PictureDescription2,
             });
           }
 
           if (Picture.PictureUrl3) {
-            this.slides.push({
+            slides.push({
               image: Picture.PictureUrl3,
               alt: Picture.PictureDescription3,
             });
+          }
+
+          if (slides.length) {
+            this.slidesSubject$.next(slides);
           }
 
           this.options = {
@@ -169,5 +184,13 @@ export class DetailComponent implements OnInit {
 
   openInfoWindow(marker: MapMarker) {
     this.infoWindow.open(marker);
+  }
+
+  toTop() {
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
+    });
   }
 }
