@@ -12,12 +12,12 @@
       {{ detailData?.Name }}
     </div>
 
-    <div class="chip">
+    <!-- <div class="chip">
       <mat-chip-list aria-label="Fish selection">
         <mat-chip>One fish</mat-chip>
         <mat-chip>Two fish</mat-chip>
       </mat-chip-list>
-    </div>
+    </div> -->
 
     <div class="introduce">
       <div *ngIf="category === 'Activity'">
@@ -174,23 +174,18 @@
         <span class="more"> 查看更多 </span>
       </div>
 
-      <div
-        fxFlex
-        fxLayout="row"
-        fxLayoutGap="8px"
-        fxLayoutAlign="space-between"
-      >
+      <div fxFlex fxLayout="row" fxLayoutGap="8px">
         <ng-container *ngFor="let item of more">
           <div
             class="card"
             fxFlex="25"
             fxLayout="column"
             fxLayoutGap="12px"
-            [routerLink]="'./Detail/'"
+            [routerLink]="'.'"
             [queryParams]="{
               category: category,
-              name: item.name,
-              theme: item.class,
+              name: item[category + 'Name'],
+              theme: item.Class1,
               page: page
             }"
           >
