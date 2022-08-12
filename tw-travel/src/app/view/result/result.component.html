@@ -43,7 +43,7 @@
         </div>
       </ng-template>
 
-      <ng-container *ngIf="data$ | async; else loading">
+      <ng-container *ngIf="dataSubject$ | async; else loading">
         <ng-container *ngIf="data.length; else noData">
           <ng-container *ngFor="let item of data">
             <div

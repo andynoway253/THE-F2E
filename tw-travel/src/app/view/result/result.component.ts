@@ -77,7 +77,7 @@ export class ResultComponent implements OnInit {
             10 + this.currentPage * 10
           );
           this.tempData = data;
-          this.data$.next(this.data);
+          this.dataSubject$.next(this.data);
         },
       });
   }
@@ -96,7 +96,7 @@ export class ResultComponent implements OnInit {
 
   tempData: any = [];
 
-  data$ = new BehaviorSubject(null);
+  dataSubject$ = new BehaviorSubject(null);
 
   ngOnInit(): void {
     switch (this.currentCategory) {
