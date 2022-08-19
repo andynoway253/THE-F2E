@@ -10,7 +10,7 @@ export class BreadcrumbService {
 
   routeEvent = new BehaviorSubject<any>(null);
 
-  setQueryParams = new BehaviorSubject<any>(null); // 記錄搜尋結果的qeuryParams
+  setRouterParams = new BehaviorSubject<any>(null); // 記錄搜尋結果的qeuryParams
 
   public setActivatedRouteRoot(root: ActivatedRoute): void {
     this.root = root;
