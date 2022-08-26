@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of, switchMap } from 'rxjs';
 import { BaseApi } from '../api/base.api';
 import { ConfigService } from './config.service';
 
@@ -22,6 +22,10 @@ export class DataService extends BaseApi {
       `${params.category}?$filter=${
         params.category === 'Restaurant' ? 'Class' : 'Class1'
       } eq '${params.theme}'`
+    ).pipe(
+      switchMap((res) => {
+        return this.dataFormatter(res, params.category);
+      })
     );
   }
 
@@ -39,16 +43,39 @@ export class DataService extends BaseApi {
   getDataByCity(params: { category: string; city: string; theme?: string }) {
     const { category, city, theme } = params;
 
-    if (theme) {
-      return this.get(
-        `${category}/` +
-          `${city}?$filter=${
-            params.category === 'Restaurant' ? 'Class' : 'Class1'
-          } eq ` +
-          `'${theme}'`
-      );
-    } else {
-      return this.get(`${category}/` + `${city}`);
-    }
+    const observable = theme
+      ? this.get(
+          `${category}/` +
+            `${city}?$filter=${
+              params.category === 'Restaurant' ? 'Class' : 'Class1'
+            } eq ` +
+            `'${theme}'`
+        )
+      : this.get(`${category}/` + `${city}`);
+
+    return observable.pipe(
+      switchMap((res) => {
+        return this.dataFormatter(res, params.category);
+      })
+    );
+  }
+
+  dataFormatter(data: any[], category: string) {
+    return of(
+      data.map((item: any, idx: number) => {
+        return {
+          ...item,
+          id: idx,
+          name: item[`${category}Name`],
+          class: item.Class
+            ? item.Class
+            : item.Class1
+            ? item.Class1
+            : item.Class2
+            ? item.Class2
+            : '其他類',
+        };
+      })
+    );
   }
 }
