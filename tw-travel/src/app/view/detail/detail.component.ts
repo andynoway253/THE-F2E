@@ -161,7 +161,7 @@ export class DetailComponent implements OnInit {
   }
 
   getRandomData(data: Array<any>) {
-    let json: any = {};
+    let json = [];
     this.more = [];
     if (data.length <= 4) {
       this.more = data;
