@@ -15,12 +15,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
     private router: Router,
 
-    private breadcrumbService: BreadcrumbService,
-
-    private configService: ConfigService
-  ) {
-    console.log(this.configService.config);
-  }
+    private breadcrumbService: BreadcrumbService
+  ) {}
 
   private _routerSubscription: Subscription = new Subscription();
 

@@ -30,11 +30,11 @@ import { ConfigService } from './shared/service/config.service';
   ],
   providers: [
     {
-      provide: APP_INITIALIZER,useFactory: (configService: ConfigService) => () =>
+      provide: APP_INITIALIZER,
+      useFactory: (configService: ConfigService) => () =>
         configService.getToken(),
       deps: [ConfigService],
       multi: true,
-
     },
   ],
   bootstrap: [AppComponent],
