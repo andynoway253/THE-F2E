@@ -1,15 +1,13 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import { Observable, of, switchMap } from 'rxjs';
 import { BaseApi } from '../api/base.api';
-import { ConfigService } from './config.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataService extends BaseApi {
-  constructor(http: HttpClient, configService: ConfigService) {
-    super(http, configService);
+  constructor(injector: Injector) {
+    super(injector);
   }
 
   getDataAll(params: { category: string }): Observable<Array<any>> {
