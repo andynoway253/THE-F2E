@@ -160,7 +160,13 @@
       </div>
     </div>
 
-    <div class="other" fxFlex="380px" fxLayout="column" fxLayoutGap="16px">
+    <div
+      *ngIf="more.length"
+      class="other"
+      fxFlex="380px"
+      fxLayout="column"
+      fxLayoutGap="16px"
+    >
       <div fxLayout="row" fxLayoutAlign="space-between baseline">
         <span class="theme">
           {{

@@ -1,4 +1,4 @@
-import { BehaviorSubject, switchMap } from 'rxjs';
+import { BehaviorSubject, EMPTY, of, Subject, switchMap } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -27,57 +27,72 @@ export class ResultComponent implements OnInit {
   ) {
     this.route.queryParams
       .pipe(
+        switchMap((params) => {
+          if (
+            this.currentTheme !== params['theme'] ||
+            this.currentCity !== params['city']
+          ) {
+            return of({ ...params, reloadData: true }); //  當「城市」或是「主題」變動需要重新撈取資料
+          } else if (this.currentPage !== params['page']) {
+            return of({ ...params, reloadData: false }); //  當頁數變動不需要重新撈取資料
+          }
+          return EMPTY;
+        }),
         switchMap((params: any) => {
           this.currentCategory = params['category'];
           this.currentTheme = params['theme'];
           this.currentCity = params['city'];
           this.currentPage = params['page'] || 0;
 
-          let observable: any;
-          const dataByCity = {
-            category: this.currentCategory,
-            city: this.currentCity || '',
-            theme:
-              this.currentCategory === 'ScenicSpot' && this.currentTheme
-                ? this.currentTheme + '類'
-                : this.currentTheme,
-          };
-          const data = {
-            category: this.currentCategory,
-            theme:
-              this.currentCategory === 'ScenicSpot'
-                ? this.currentTheme + '類'
-                : this.currentTheme || '',
-          };
-          observable = this.currentCity
-            ? this.dataService.getDataByCity(dataByCity)
-            : this.dataService.getData(data);
+          this.dataReadySubject$.next(null);
 
-          return observable;
+          if (params['reloadData']) {
+            const obj = {
+              category: this.currentCategory,
+              theme:
+                this.currentCategory === 'ScenicSpot' && this.currentTheme
+                  ? this.currentTheme + '類'
+                  : this.currentTheme || '',
+            };
+
+            const dataByCity = {
+              ...obj,
+              city: this.currentCity,
+            };
+            const data = obj;
+
+            let observable: any;
+
+            return (observable = this.currentCity
+              ? this.dataService.getDataByCity(dataByCity)
+              : this.dataService.getData(data));
+          }
+
+          return of(params['reloadData']);
         })
       )
       .subscribe({
-        next: (res: any) => {
-          const data = res.map((item: any, idx: number) => {
-            return {
-              id: idx,
-              name: item[`${this.currentCategory}Name`],
-              class: item.Class
-                ? item.Class
-                : item.Class1
-                ? item.Class1
-                : item.Class2
-                ? item.Class2
-                : '其他類',
-              ...item,
-            };
-          });
-          this.data = data.slice(
-            0 + this.currentPage * 10,
-            10 + this.currentPage * 10
-          );
-          this.tempData = data;
-          this.dataSubject$.next(this.data);
+        next: (res: Array<[] | boolean>) => {
+          if (typeof res === 'object') {
+            this.tempData = res;
+            //  回傳陣列 判斷有無資料
+            if (res.length) {
+              this.data = this.tempData.slice(
+                0 + this.currentPage * 10,
+                10 + this.currentPage * 10
+              );
+            } else {
+              this.data = [];
+            }
+          } else {
+            //  回傳boolean 僅是頁面的切換
+            this.data = this.tempData.slice(
+              0 + this.currentPage * 10,
+              10 + this.currentPage * 10
+            );
+          }
+
+          this.dataReadySubject$.next(this.data);
         },
       });
   }
@@ -92,11 +107,15 @@ export class ResultComponent implements OnInit {
 
   currentPage = 0;
 
+  reloadData = true;
+
   data: any = [];
 
   tempData: any = [];
 
-  dataSubject$ = new BehaviorSubject(null);
+  dataReadySubject$ = new BehaviorSubject(null); //  取得資料前先顯示轉圈葉面
+
+  aaa = new Subject<boolean>();
 
   ngOnInit(): void {
     switch (this.currentCategory) {

@@ -1,20 +1,20 @@
-import { AlertMessageService } from './../../shared/component/alert-message/alert-message.service';
-import { CITYLIST } from './../../shared/model/data.model';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MapInfoWindow, MapMarker } from '@angular/google-maps';
 import { ActivatedRoute } from '@angular/router';
 import {
-  catchError,
   map,
-  Observable,
+  catchError,
   of,
+  Observable,
+  BehaviorSubject,
   switchMap,
   throwError,
-  BehaviorSubject,
 } from 'rxjs';
-import { DataService } from 'src/app/shared/service/data.service';
-import { MapInfoWindow, MapMarker } from '@angular/google-maps';
+import { DataService } from 'src/app/shared';
+import { AlertMessageService } from 'src/app/shared/component/alert-message/alert-message.service';
 import { BreadcrumbService } from 'src/app/shared/component/breadcrumb/breadcrumb.service';
+import { CITYLIST } from 'src/app/shared/model/data.model';
 
 @Component({
   selector: 'app-detail',
@@ -27,11 +27,11 @@ export class DetailComponent implements OnInit {
 
     private route: ActivatedRoute,
 
+    private alertMessageService: AlertMessageService,
+
     private breadcrumbService: BreadcrumbService,
 
-    private dataService: DataService,
-
-    private alertMessageService: AlertMessageService
+    private dataService: DataService
   ) {
     this.apiLoaded = this.httpClient
       .jsonp(
@@ -147,21 +147,15 @@ export class DetailComponent implements OnInit {
               theme: theme,
             });
           }
-
-          return throwError(() => new Error());
+          return throwError(() => '公開資料缺少資料');
         })
       )
       .subscribe({
         next: (res) => {
           this.getRandomData(res);
         },
-        error: (msg) => {
-          if (msg.error.message) {
-            this.alertMessageService.showError(msg.error.message);
-            return;
-          }
-
-          this.alertMessageService.showError('公開資料缺少資料');
+        error: (err) => {
+          this.alertMessageService.showError(err);
         },
       });
   }

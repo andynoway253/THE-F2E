@@ -43,7 +43,7 @@
         </div>
       </ng-template>
 
-      <ng-container *ngIf="dataSubject$ | async; else loading">
+      <ng-container *ngIf="dataReadySubject$ | async; else loading">
         <ng-container *ngIf="data.length; else noData">
           <ng-container *ngFor="let item of data">
             <div
@@ -55,6 +55,7 @@
                 category: currentCategory,
                 name: item.name,
                 theme: item.class,
+                city: currentCity,
                 page: currentPage
               }"
             >
@@ -100,6 +101,7 @@
         [length]="tempData.length"
         [pageSize]="10"
         [pageIndex]="currentPage"
+        [showFirstLastButtons]="true"
         (page)="pageChange($event)"
         aria-label="Select page"
       >
