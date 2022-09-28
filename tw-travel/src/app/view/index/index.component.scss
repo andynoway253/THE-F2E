@@ -6,7 +6,7 @@
 }
 
 .content {
-  .first {
+  .search {
     width: 920px;
 
     .title {
@@ -24,12 +24,7 @@
     }
   }
 
-  .carousel {
-    width: 1040px;
-    height: 400px;
-  }
-
-  .third {
+  .introduction {
     width: 1040px;
     .theme {
       font-size: 36px;
@@ -52,6 +47,7 @@
   }
 
   .activityCard {
+    cursor: pointer;
     height: 160px;
     border-radius: 12px;
     background-color: #f9f9f9;
