@@ -27,14 +27,14 @@ export class ResultComponent implements OnInit {
   ) {
     this.route.queryParams
       .pipe(
-        switchMap((params) => {
+        switchMap((router) => {
           if (
-            this.currentTheme !== params['theme'] ||
-            this.currentCity !== params['city']
+            this.currentTheme !== router['theme'] ||
+            this.currentCity !== router['city']
           ) {
-            return of({ ...params, reloadData: true }); //  當「城市」或是「主題」變動需要重新撈取資料
-          } else if (this.currentPage !== params['page']) {
-            return of({ ...params, reloadData: false }); //  當頁數變動不需要重新撈取資料
+            return of({ ...router, reloadData: true }); //  當「城市」或是「主題」變動需要重新撈取資料
+          } else if (this.currentPage !== router['page']) {
+            return of({ ...router, reloadData: false }); //  當頁數變動不需要重新撈取資料
           }
           return EMPTY;
         }),
@@ -44,7 +44,7 @@ export class ResultComponent implements OnInit {
           this.currentCity = params['city'];
           this.currentPage = params['page'] || 0;
 
-          this.dataReadySubject$.next(null);
+          this.dataReadySubject$.next(false);
 
           if (params['reloadData']) {
             const obj = {
@@ -92,7 +92,7 @@ export class ResultComponent implements OnInit {
             );
           }
 
-          this.dataReadySubject$.next(this.data);
+          this.dataReadySubject$.next(true);
         },
       });
   }
@@ -107,15 +107,11 @@ export class ResultComponent implements OnInit {
 
   currentPage = 0;
 
-  reloadData = true;
-
   data: any = [];
 
   tempData: any = [];
 
-  dataReadySubject$ = new BehaviorSubject(null); //  取得資料前先顯示轉圈葉面
-
-  aaa = new Subject<boolean>();
+  dataReadySubject$ = new BehaviorSubject<boolean>(false); //  取得資料前先顯示轉圈葉面
 
   ngOnInit(): void {
     switch (this.currentCategory) {

@@ -20,8 +20,14 @@
 
   <div fxLayout="column" fxLayoutGap="32px">
     <div class="theme" fxFlex fxLayoutGap="8px" fxLayoutAlign="start baseline">
-      <span>搜尋結果</span>
-      <span class="themeResultCount">共有 {{ tempData.length }} 筆</span>
+      <ng-container *ngIf="dataReadySubject$ | async; else searching">
+        <span>搜尋結果</span>
+        <span class="themeResultCount">共有 {{ tempData.length }} 筆</span>
+      </ng-container>
+
+      <ng-template #searching>
+        <span>搜尋中...</span>
+      </ng-template>
     </div>
 
     <div
