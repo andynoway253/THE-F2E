@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MapInfoWindow, MapMarker } from '@angular/google-maps';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import {
   map,
@@ -27,6 +29,10 @@ export class DetailComponent implements OnInit {
 
     private route: ActivatedRoute,
 
+    private bottomSheet: MatBottomSheet,
+
+    private snackBar: MatSnackBar,
+
     private alertMessageService: AlertMessageService,
 
     private breadcrumbService: BreadcrumbService,
@@ -45,6 +51,8 @@ export class DetailComponent implements OnInit {
   }
 
   @ViewChild(MapInfoWindow) infoWindow: MapInfoWindow;
+
+  @ViewChild('test') test: any;
 
   apiLoaded: Observable<boolean>;
 
@@ -186,5 +194,13 @@ export class DetailComponent implements OnInit {
       left: 0,
       behavior: 'smooth',
     });
+  }
+
+  openBottomSheet() {
+    this.bottomSheet.open(this.test);
+  }
+
+  openSnackBar() {
+    this.snackBar.open('尚未實作', '關閉', { duration: 1000 });
   }
 }

@@ -140,6 +140,19 @@
       </div>
 
       <div fxLayout="column" fxLayoutGap="8px">
+        <div fxLayout="row" fxLayoutAlign="end ">
+          <div
+            class="hotel"
+            fxLayout="row"
+            fxLayoutGap="4px"
+            fxLayoutAlign="end center"
+            (click)="openBottomSheet()"
+          >
+            <mat-icon>hotel</mat-icon>
+            <span>旅宿查詢</span>
+          </div>
+        </div>
+
         <div class="goolgeMap" *ngIf="apiLoaded | async">
           <google-map height="250px" width="540px" [options]="options">
             <map-marker
@@ -152,10 +165,11 @@
             <map-info-window>Info Window content</map-info-window>
           </google-map>
         </div>
+
         <div class="aroundInfo" fxLayout="row" fxLayoutGap="30px">
-          <img src="../../assets/img/vertical03.png" />
-          <img src="../../assets/img/vertical02.png" />
-          <img src="../../assets/img/vertical01.png" />
+          <img src="../../assets/img/vertical03.png" (click)="openSnackBar()" />
+          <img src="../../assets/img/vertical02.png" (click)="openSnackBar()" />
+          <img src="../../assets/img/vertical01.png" (click)="openSnackBar()" />
         </div>
       </div>
     </div>
@@ -234,3 +248,27 @@
     </div>
   </div>
 </div>
+
+<ng-template #test>
+  <mat-nav-list>
+    <a href="https://keep.google.com/" mat-list-item>
+      <span mat-line>Google Keep</span>
+      <span mat-line>Add to a note</span>
+    </a>
+
+    <a href="https://docs.google.com/" mat-list-item>
+      <span mat-line>Google Docs</span>
+      <span mat-line>Embed in a document</span>
+    </a>
+
+    <a href="https://plus.google.com/" mat-list-item>
+      <span mat-line>Google Plus</span>
+      <span mat-line>Share with your friends</span>
+    </a>
+
+    <a href="https://hangouts.google.com/" mat-list-item>
+      <span mat-line>Google Hangouts</span>
+      <span mat-line>Show to your coworkers</span>
+    </a>
+  </mat-nav-list>
+</ng-template>
