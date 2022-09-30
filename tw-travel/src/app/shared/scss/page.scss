@@ -9,14 +9,13 @@
 
 .card {
   cursor: pointer;
-
   height: 270px;
+
   div.img {
     overflow: hidden;
     border-radius: 20px;
 
     img {
-      width: 100%;
       height: 218px;
       transform: scale(1, 1);
       transition: all 0.5s ease-out;
@@ -41,6 +40,62 @@
 
     .location {
       color: #646464;
+    }
+  }
+}
+
+%card {
+  cursor: pointer;
+  height: 160px;
+  border-radius: 12px;
+  background-color: #f9f9f9;
+
+  .img {
+    overflow: hidden;
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+
+    img {
+      width: 160px;
+      height: 160px;
+      transform: scale(1, 1);
+      transition: all 0.5s ease-out;
+    }
+
+    img:hover {
+      transform: scale(1.1, 1.1);
+    }
+  }
+
+  .content {
+    padding: 0px 15px 0px 15px;
+
+    .time {
+      color: #646464;
+    }
+
+    .name {
+      font-size: 22px;
+      font-weight: bold;
+      color: #2f2f2f;
+    }
+
+    .location {
+      color: #646464;
+    }
+
+    .detail {
+      color: #7f977b;
+
+      &::after {
+        content: "";
+        border: solid #7f977b;
+        border-width: 0 2px 2px 0;
+        display: inline-block;
+        padding: 3px;
+        transform: rotate(-45deg);
+        -webkit-transform: rotate(-45deg);
+      }
     }
   }
 }

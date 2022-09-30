@@ -74,7 +74,7 @@
               theme: item.Class1 ? item.Class1 : '其他'
             }"
           >
-            <div class="activityImg">
+            <div class="img">
               <img
                 [src]="
                   item.Picture.PictureUrl1
@@ -89,19 +89,19 @@
             </div>
 
             <div
-              class="activityContent"
+              class="content"
               fxFlex
               fxLayout="column"
               fxLayoutGap="12px"
               fxLayoutAlign="center"
             >
-              <p class="activityTime">
+              <p class="time">
                 {{ item.StartTime | date: "yyyy/MM/dd" }} -
                 {{ item.EndTime | date: "yyyy/MM/dd" }}
               </p>
-              <p class="activityName">{{ item.ActivityName }}</p>
+              <p class="name">{{ item.ActivityName }}</p>
               <div fxLayout="row" fxLayoutAlign="space-between">
-                <div class="activityLocation" fxLayout="row" fxLayoutGap="8px">
+                <div class="location" fxLayout="row" fxLayoutGap="8px">
                   <img
                     style="width: 13px; height: 16px"
                     src="../../assets/img/Vector-2.png"
@@ -109,7 +109,7 @@
                   <span> {{ item.Location }} </span>
                 </div>
 
-                <span class="activityDetail"> 詳細介紹 </span>
+                <span class="detail"> 詳細介紹 </span>
               </div>
             </div>
           </div>
