@@ -52,7 +52,7 @@ export class DetailComponent implements OnInit {
 
   @ViewChild(MapInfoWindow) infoWindow: MapInfoWindow;
 
-  @ViewChild('test') test: any;
+  @ViewChild('hotelSearch') hotelSearch: any;
 
   apiLoaded: Observable<boolean>;
 
@@ -197,7 +197,7 @@ export class DetailComponent implements OnInit {
   }
 
   openBottomSheet() {
-    this.bottomSheet.open(this.test);
+    this.bottomSheet.open(this.hotelSearch);
   }
 
   openSnackBar() {
