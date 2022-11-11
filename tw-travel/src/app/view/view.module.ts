@@ -17,6 +17,7 @@ import { DetailComponent } from './detail/detail.component';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
 import { ResultComponent } from './result/result.component';
+import { TaiwanMapModule } from '../shared/component/taiwan-map/taiwan-map.module';
 
 const COMPONENT = [
   IndexComponent,
@@ -40,9 +41,10 @@ const COMPONENT = [
     HttpClientJsonpModule,
 
     AlertMessageModule,
-    CarouselModule,
     BreadcrumbModule,
+    CarouselModule,
     SearchBarModule,
+    TaiwanMapModule,
   ],
 })
 export class ViewModule {}

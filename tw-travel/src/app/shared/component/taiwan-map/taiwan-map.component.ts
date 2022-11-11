@@ -1,25 +1,24 @@
 import { Component } from '@angular/core';
 import * as d3 from 'd3';
 import * as topojson from 'topojson-client';
+import { TaiwanMapService } from './taiwan-map.service';
 @Component({
   selector: 'app-taiwan-map',
   templateUrl: './taiwan-map.component.html',
+  styleUrls: ['./taiwan-map.component.scss'],
 })
 export class TaiwanMaplComponent {
-  constructor() {}
+  constructor(private taiwanMapService: TaiwanMapService) {}
 
   ngOnInit() {
+    const that = this;
     let svg = d3
       .select('#canvas')
       .append('svg')
       .style('height', 750)
       .style('width', 800);
 
-    let tooltip = d3
-      .select('#tooltip')
-      .style('position', 'absolute')
-      .style('width', 300)
-      .style('height', 120);
+    let tooltip = d3.select('#tooltip');
 
     d3.select('#canvas').on('mousemove', function (e) {
       tooltip.style('left', 20).style('bottom', 35);
@@ -46,21 +45,29 @@ export class TaiwanMaplComponent {
         .attr('class', 'geo-path')
         .attr('d', path(projection) as any)
         .style('stroke', 'white')
-        .style('fill', 'black')
         .on('mouseover', function () {
-          d3.select(this).style('fill', '#FFCA28').style('opacity', 0.5);
-
+          d3.select(this)
+            .style('fill', '#FFCA28')
+            .style('opacity', 0.5)
+            .transition()
+            .style('transform', 'translateY(-5px)');
           const d: Array<any> = d3.select(this).data();
           tooltip.select('.text1').html(d[0].properties.COUNTYNAME);
           tooltip.select('.text2').html(d[0].properties.COUNTYENG);
           tooltip.style('display', 'block');
         })
         .on('mouseleave', function () {
-          d3.select(this).style('stroke', 'white').style('fill', 'black');
+          d3.select(this)
+            .style('fill', 'black')
+            .style('opacity', 1)
+            .transition()
+            .style('transform', 'translateY(0)');
           tooltip.style('display', 'none');
         })
-        .on('click', () => {
-          console.log('123');
+        .on('click', function () {
+          const d: Array<any> = d3.select(this).data();
+          console.log(d);
+          that.taiwanMapService.close();
         });
 
       // svg

@@ -7,6 +7,7 @@ import {
 import { AlertMessageService } from './../alert-message/alert-message.service';
 import { Component, Input, Output } from '@angular/core';
 import { EventEmitter } from '@angular/core';
+import { TaiwanMapService } from '../taiwan-map/taiwan-map.service';
 
 @Component({
   selector: 'app-search-bar',
@@ -14,7 +15,11 @@ import { EventEmitter } from '@angular/core';
   styleUrls: ['./search-bar.component.scss'],
 })
 export class SearchBarComponent {
-  constructor(private alertMessageService: AlertMessageService) {}
+  constructor(
+    private alertMessageService: AlertMessageService,
+
+    private taiwanMapService: TaiwanMapService
+  ) {}
 
   @Input() layout = 'row';
 
@@ -86,5 +91,9 @@ export class SearchBarComponent {
     }
 
     this.executeSearch.emit(params);
+  }
+
+  openTWMap() {
+    this.taiwanMapService.open();
   }
 }
