@@ -31,7 +31,7 @@ export class CarouselComponent {
   ngOnInit() {
     this.slides = [
       {
-        image: 'https://fakeimg.pl/1040x400/?text=缺少圖片&font=noto',
+        image: '../../assets/img/ScenicSpotPicture.png',
         alt: '',
       },
       {
