@@ -33,7 +33,9 @@ export class IndexComponent implements OnInit {
     ).subscribe({
       next: ([scenicSpot, restaurant, activity]) => {
         this.scenicSpot = scenicSpot;
+
         this.restaurant = restaurant;
+
         this.activity = activity;
       },
     });

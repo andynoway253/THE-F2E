@@ -12,7 +12,11 @@ export class DataService extends BaseApi {
 
   getDataAll(params: { category: string }): Observable<Array<any>> {
     //  目前想不到怎麼隨機取號
-    return this.get(`${params.category}?%24top=4`);
+    return this.get(`${params.category}?%24top=4`).pipe(
+      switchMap((res) => {
+        return this.dataFormatter(res, params.category);
+      })
+    );;
   }
 
   getData(params: { category: string; theme: string }): Observable<Array<any>> {
