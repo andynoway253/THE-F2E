@@ -16,7 +16,7 @@ export class DataService extends BaseApi {
       switchMap((res) => {
         return this.dataFormatter(res, params.category);
       })
-    );;
+    );
   }
 
   getData(params: { category: string; theme: string }): Observable<Array<any>> {
@@ -39,6 +39,10 @@ export class DataService extends BaseApi {
       `${params.category}?$filter=${params.category + 'Name'} eq '${
         params.name
       }'`
+    ).pipe(
+      switchMap((res) => {
+        return this.dataFormatter(res, params.category);
+      })
     );
   }
 

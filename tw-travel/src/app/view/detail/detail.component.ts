@@ -66,6 +66,8 @@ export class DetailComponent implements OnInit {
 
   category = '';
 
+  name = '';
+
   page: any;
 
   more: Array<any> = [];
@@ -80,6 +82,7 @@ export class DetailComponent implements OnInit {
         switchMap((queryParams: any) => {
           const { category, city, theme, name, page } = queryParams.params; // 當前分類
           this.category = category;
+          this.name = name;
           this.page = page;
 
           this.breadcrumbService.setRouterParams.next({
@@ -98,19 +101,17 @@ export class DetailComponent implements OnInit {
         switchMap((res) => {
           const { data, category, theme } = res;
           const slides = [];
-          this.detailData = data.map((item) => ({
-            ...item,
-            Name: item[`${category}Name`],
-          }))[0];
 
-          const { Address, City, Position, Picture } = this.detailData;
+          this.detailData = data[0];
+
+          const { Address, City, Position, Picture } = data[0];
 
           //  有些資料沒有 city屬性
           const cityEng = City
             ? CITYLIST.filter((item) => item.label === City)[0].value
             : Address
             ? CITYLIST.filter((item) => item.label === Address.substr(0, 3))[0]
-                .value
+                ?.value
             : null;
 
           if (Picture.PictureUrl1) {
@@ -155,33 +156,32 @@ export class DetailComponent implements OnInit {
               theme: theme,
             });
           }
-          return throwError(() => '公開資料缺少資料');
+          return throwError(() => '公開Api缺少資料');
         })
       )
       .subscribe({
-        next: (res) => {
-          this.getRandomData(res);
+        next: (res: any[]) => {
+          let json = [];
+          this.more = [];
+
+          res = res.filter((item) => item.name !== this.name);
+
+          if (res.length <= 4) {
+            this.more = res;
+          } else {
+            while (this.more.length < 4) {
+              let i = Math.round(Math.random() * res.length);
+              if (!json[i] && res[i]) {
+                json[i] = true;
+                this.more.push(res[i]);
+              }
+            }
+          }
         },
         error: (err) => {
           this.alertMessageService.showError(err);
         },
       });
-  }
-
-  getRandomData(data: Array<any>) {
-    let json = [];
-    this.more = [];
-    if (data.length <= 4) {
-      this.more = data;
-    } else {
-      while (this.more.length < 4) {
-        let i = Math.round(Math.random() * data.length);
-        if (!json[i] && data[i]) {
-          json[i] = true;
-          this.more.push(data[i]);
-        }
-      }
-    }
   }
 
   openInfoWindow(marker: MapMarker) {
