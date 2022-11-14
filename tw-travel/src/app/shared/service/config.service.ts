@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
-import { BaseApi } from '../api/base.api';
 
 @Injectable({
   providedIn: 'root',
