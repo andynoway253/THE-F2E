@@ -4,11 +4,7 @@
     appearance="outline"
     [class]="hiddenCategory ? 'hidden' : ''"
   >
-    <mat-select
-      [(ngModel)]="selectCategory"
-      placeholder="請選擇類別"
-      (selectionChange)="onCategoryChange($event)"
-    >
+    <mat-select [(ngModel)]="selectCategory" placeholder="請選擇類別">
       <mat-option *ngFor="let item of categoryList" [value]="item.value">
         {{ item.label }}
       </mat-option>

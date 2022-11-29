@@ -5,14 +5,22 @@ import {
   CITYLIST,
 } from './../../model/data.model';
 import { AlertMessageService } from './../alert-message/alert-message.service';
-import { Component, Input, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { TaiwanMapService } from '../taiwan-map/taiwan-map.service';
+import { MatSelectChange } from '@angular/material/select';
 
 @Component({
   selector: 'app-search-bar',
   templateUrl: './search-bar.component.html',
   styleUrls: ['./search-bar.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchBarComponent {
   constructor(
@@ -31,17 +39,11 @@ export class SearchBarComponent {
 
   @Input() hiddenKeyWord = false;
 
-  @Input() set category(value: any) {
-    this.selectCategory = value;
-  }
+  @Input() category = '';
 
-  @Input() set city(value: any) {
-    this.selectCity = value;
-  }
+  @Input() city = '';
 
-  @Input() set theme(value: any) {
-    this.selectTheme = value;
-  }
+  @Input() theme = '';
 
   @Output() executeSearch = new EventEmitter<{
     selectCategory: string;
@@ -51,7 +53,8 @@ export class SearchBarComponent {
 
   cityList = CITYLIST;
 
-  themeList: Array<{ label: string; value: string | null; src: string }>;
+  themeList: Array<{ label: string; value: string | null; src: string }> =
+    SCENICSPOTLIST;
 
   categoryList = [
     { label: '探索景點', value: 'ScenicSpot' },
@@ -59,19 +62,27 @@ export class SearchBarComponent {
     { label: '品嚐美食', value: 'Restaurant' },
   ];
 
-  selectCategory = '';
+  selectCategory = 'ScenicSpot';
 
   selectCity = '';
 
   selectTheme = '';
 
-  ngOnInit() {
-    this.selectCategory === 'Activity'
-      ? (this.themeList = ACTIVITYLIST)
-      : this.selectCategory === 'ScenicSpot'
-      ? (this.themeList = SCENICSPOTLIST)
-      : (this.themeList = RESTAURANTSLIST);
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['category']) {
+      changes['category'].currentValue === 'Activity'
+        ? (this.themeList = ACTIVITYLIST)
+        : changes['category'].currentValue === 'ScenicSpot'
+        ? (this.themeList = SCENICSPOTLIST)
+        : (this.themeList = RESTAURANTSLIST);
+
+      this.selectCategory = changes['category']?.currentValue;
+      this.selectCity = changes['city']?.currentValue;
+      this.selectTheme = changes['theme']?.currentValue;
+    }
   }
+
+  ngOnInit() {}
 
   search(params: {
     selectCategory: string;
