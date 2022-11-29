@@ -2,9 +2,13 @@
   <mat-form-field
     fxFlex="0 0 auto"
     appearance="outline"
-    [style]="hiddenCategory ? 'display:none' : ''"
+    [class]="hiddenCategory ? 'hidden' : ''"
   >
-    <mat-select [(ngModel)]="selectCategory" placeholder="請選擇類別">
+    <mat-select
+      [(ngModel)]="selectCategory"
+      placeholder="請選擇類別"
+      (selectionChange)="onCategoryChange($event)"
+    >
       <mat-option *ngFor="let item of categoryList" [value]="item.value">
         {{ item.label }}
       </mat-option>
@@ -14,7 +18,7 @@
   <mat-form-field
     fxFlex="0 0 auto"
     appearance="outline"
-    [style]="hiddenCity ? 'display:none' : ''"
+    [class]="hiddenCity ? 'hidden' : ''"
   >
     <mat-select [(ngModel)]="selectCity" placeholder="請選擇城市">
       <mat-option *ngFor="let item of cityList" [value]="item.value">
@@ -26,7 +30,7 @@
   <mat-form-field
     fxFlex="0 0 auto"
     appearance="outline"
-    [style]="hiddenTheme ? 'display:none' : ''"
+    [class]="hiddenTheme ? 'hidden' : ''"
   >
     <mat-select [(ngModel)]="selectTheme" placeholder="請選擇主題">
       <mat-option *ngFor="let item of themeList" [value]="item.value">
@@ -38,7 +42,7 @@
   <mat-form-field
     fxFlex="3 0 auto"
     appearance="outline"
-    [style]="hiddenKeyWord ? 'display:none' : ''"
+    [class]="hiddenKeyWord ? 'hidden' : ''"
   >
     <input
       matInput
